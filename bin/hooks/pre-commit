@@ -1,0 +1,3 @@
+#!/bin/sh
+
+"./vendor/bin/robo" git:hook-pre-commit
