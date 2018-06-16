@@ -2,6 +2,7 @@
 
 namespace Shawm11\Hawk\Utils;
 
+use Shawm11\Hawk\HawkException;
 use Shawm11\Hawk\Server\BadRequestException;
 use Shawm11\Hawk\Server\UnauthorizedException;
 
@@ -49,45 +50,45 @@ class Utils
         return strtolower(trim(explode(';', $header)[0]));
     }
 
-    public function now($localtimeOffsetMsec)
+    public function now($localtimeOffsetMsec = 0)
     {
         $localtimeOffsetMsec = $localtimeOffsetMsec ? $localtimeOffsetMsec : 0;
 
         return floor(microtime(true) * 1000 + $localtimeOffsetMsec);
     }
 
-    public function nowSecs($localtimeOffsetMsec)
+    public function nowSecs($localtimeOffsetMsec = 0)
     {
         $localtimeOffsetMsec = $localtimeOffsetMsec ? $localtimeOffsetMsec : 0;
 
         return floor(microtime(true) + ($localtimeOffsetMsec / 1000));
     }
 
-    public function parseAuthorizationHeader($header, $keys)
-    {
-        $keys = $keys ? $keys : ['id', 'ts', 'nonce', 'hash', 'ext', 'mac', 'app', 'dlg'];
-
+    public function parseAuthorizationHeader(
+        $header,
+        $keys = ['id', 'ts', 'nonce', 'hash', 'ext', 'mac', 'app', 'dlg']
+    ) {
         if (!$header) {
-            throw new UnauthorizedException('Missing Hawk header in request');
+            throw new UnauthorizedException;
         }
 
         if (strlen($header) > $this->limits['maxMatchLength']) {
             throw new BadRequestException('Header length too long');
         }
 
-        $headerParts = preg_grep($this->authHeaderRegex, $header);
+        $headerParts = [];
 
-        if (!$headerParts) {
+        if (!preg_match_all($this->authHeaderRegex, $header, $headerParts)) {
             throw new BadRequestException('Invalid header syntax');
         }
 
-        $scheme = $headerParts[1];
+        $scheme = isset($headerParts[1][0]) ? $headerParts[1][0] : '';
 
         if (strtolower($scheme) !== 'hawk') {
-            throw new UnauthorizedException('Missing Hawk header in request');
+            throw new UnauthorizedException;
         };
 
-        $attributesString = (isset($headerParts[2]) && $headerParts[2]) ? $headerParts[2] : null;
+        $attributesString = (isset($headerParts[2][0]) && $headerParts[2][0]) ? $headerParts[2][0] : null;
 
         if (!$attributesString) {
             throw new BadRequestException('Invalid header syntax');
@@ -96,33 +97,35 @@ class Utils
         $attributes = [];
         $errorMessage = '';
         $verify = preg_replace_callback(
-            '/(\w+)="([^"\\]*)"\s*(?:,\s*|$)/',
-            function ($matches) use ($attributes, $errorMessage) {
+            '/(\w+)="([^"\\\]*)"\s*(?:,\s*|$)/',
+            function ($matches) use (&$attributes, &$errorMessage, $keys) {
                 // Check if the attribute name is invalid
-                if (in_array($matches[1], $keys) === false) {
+                if (!in_array($matches[1], $keys)) {
                     $errorMessage = 'Unknown attribute: ' . $matches[1];
-                    return null;
+                    return 'error';
                 }
 
                 // Check if the attribute has characters that are not allowed
                 if (!preg_match($this->attributeRegex, $matches[2])) {
                     $errorMessage = 'Bad attribute value: ' . $matches[1];
-                    return null;
+                    return 'error';
                 }
 
                 // Check if the attribute is a duplicate by checking if the
                 // attribute has been processed before
-                if ($attributes[$matches[1]]) {
+                if (isset($attributes[$matches[1]])) {
                     $errorMessage = 'Duplicate attribute: ' . $matches[1];
-                    return null;
+                    return 'error';
                 }
 
-                $attribute[$matches[1]] = $matches[2];
+                $attributes[$matches[1]] = $matches[2];
 
                 return '';
-            }
+            },
+            $attributesString
         );
 
+        // Check if the attributes are not valid
         if ($verify !== '') {
             throw new BadRequestException($errorMessage ? $errorMessage : 'Bad header format');
         }
@@ -133,7 +136,7 @@ class Utils
     public function escapeHeaderAttribute($attribute)
     {
         // Allowed value characters: !#$%&'()*+,-./:;<=>?@[]^_`{|}~ and space, a-z, A-Z, 0-9, \, "
-        if (preg_match("/^[ \w\!#\$%&'\(\)\*\+,\-\.\/\:;<\=>\?@\[\]\^`\{\|\}~\"\\]*$/", $attribute)) {
+        if (!preg_match("/^[ \w\!#\$%&'\(\)\*\+,\-\.\/\:;<\=>\?@\[\]\^`\{\|\}~\"\\\]*$/", $attribute)) {
             throw new HawkException("Bad attribute value ($attribute)");
         }
 

@@ -37,7 +37,7 @@ interface CryptoInterface
      * @param  string  $contentType  Value of the `Content-Type` HTTP header
      * @return string  The hash
      */
-    public function calculatePayloadHash($payload, $algorithm, $contentType);
+    public function calculatePayloadHash($payload, $algorithm, $contentType = null);
 
     /**
      * Calculate the HMAC digest of the given timestamp using the given

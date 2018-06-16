@@ -20,13 +20,13 @@ class Crypto
      *
      * @var array
      */
-    public $algorithims = ['sha1', 'sha256'];
+    public $algorithms = ['sha1', 'sha256'];
 
 
     public function calculateMac($type, $credentials, $options)
     {
         $normalized = $this->generateNormalizedString($type, $options);
-        $hmac = hash_hmac($credentials['algorithm'], $normalized, $credentials['key']);
+        $hmac = hash_hmac($credentials['algorithm'], $normalized, $credentials['key'], true);
         $digest = base64_encode($hmac);
 
         return $digest;
@@ -44,7 +44,7 @@ class Crypto
 
         if ($resource && $resource[0] !== '/') {
             $url = parse_url($resource);
-            $resource = $uri['path'] . (isset($uri['query']) && $uri['query']) ? ('?'. $uri['query']) : '';
+            $resource = $url['path'] . (isset($url['query']) && $url['query']) ? ('?'. $url['query']) : '';
         }
 
         /*
@@ -56,12 +56,12 @@ class Crypto
                     . "{$options['nonce']}\n"
                     . strtoupper((isset($options['method']) && $options['method']) ? $options['method'] : '') . "\n"
                     . "$resource\n"
-                    . mb_strtolower($options['host']) . "\n"
+                    . strtolower($options['host']) . "\n"
                     . "{$options['port']}\n"
                     . ((isset($options['hash']) && $options['hash']) ? $options['hash'] : '') . "\n";
 
         if (isset($options['ext']) && $options['ext']) {
-            $normalized .= str_replace('\\', '\\\\', str_replace("\n", '\n', $options['ext']));
+            $normalized .= str_replace("\n", '\n', str_replace('\\', '\\\\', $options['ext']));
         }
 
         $normalized .= "\n";
@@ -74,19 +74,24 @@ class Crypto
         return $normalized;
     }
 
-    public function calculatePayloadHash($payload, $algorithm, $contentType)
+    public function calculatePayloadHash($payload, $algorithm, $contentType = null)
     {
         $data = "hawk.{$this->headerVersion}.payload\n"
               . (new Utils)->parseContentType($contentType) . "\n"
               . ($payload ? $payload : '') . "\n";
-        $hash = hash($algorithm, $data);
+        $hash = hash($algorithm, $data, true);
 
         return base64_encode($hash);
     }
 
     public function calculateTsMac($ts, $credentials)
     {
-        $hmac = hash_hmac($credentials['algorithm'], "hawk.{$this->headerVersion}.ts\n$ts\n", $credentials['key']);
+        $hmac = hash_hmac(
+            $credentials['algorithm'],
+            "hawk.{$this->headerVersion}.ts\n$ts\n",
+            $credentials['key'],
+            true
+        );
 
         return base64_encode($hmac);
     }

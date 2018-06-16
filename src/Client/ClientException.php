@@ -2,7 +2,7 @@
 
 namespace Shawm11\Hawk\Client;
 
-use Shawm11\HawkException;
+use Shawm11\Hawk\HawkException;
 
 class ClientException extends HawkException
 {

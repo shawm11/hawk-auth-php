@@ -2,6 +2,9 @@
 
 namespace Shawm11\Hawk\Server;
 
+use Shawm11\Hawk\Crypto\Crypto;
+use Shawm11\Hawk\Utils\Utils;
+
 class Server
 {
     protected $Crypto;
@@ -17,8 +20,8 @@ class Server
 
     public function __construct()
     {
-        $Crypto = new Crypto;
-        $Utils = new Utils;
+        $this->Crypto = new Crypto;
+        $this->Utils = new Utils;
     }
 
     public function authenticate($request, callable $credentialsFunc, $options = [])
@@ -35,13 +38,33 @@ class Server
          * Get application time before any other processing
          */
 
-        $now = $Utils->now($options['localtimeOffsetMsec']);
+        $options['localtimeOffsetMsec'] = isset($options['localtimeOffsetMsec'])
+            ? $options['localtimeOffsetMsec']
+            : 0;
+        $now = $this->Utils->now($options['localtimeOffsetMsec']);
+
+        /*
+         * Check host and port
+         */
+
+        $host = (isset($options['host']) && $options['host'])
+            ? $options['host']
+            : ((isset($request['host']) && $request['host']) ? $request['host'] : null);
+        $port = (isset($options['port']) && $options['port'])
+            ? $options['port']
+            : ((isset($request['port']) && $request['port']) ? $request['port'] : null);
+
+        if (!$host || !$port) {
+            throw new BadRequestException('Invalid Host header');
+        }
 
         /*
          * Parse HTTP Authorization header
          */
 
-        $attributes = $Utils->parseAuthorizationHeader($request['authorization']);
+        $attributes = $this->Utils->parseAuthorizationHeader(
+            isset($request['authorization']) ? $request['authorization'] : null
+        );
 
         /*
          * Construct artifacts container
@@ -49,8 +72,8 @@ class Server
 
         $artifacts = [
             'method' => (isset($request['method']) && $request['method']) ? $request['method'] : null,
-            'host' => (isset($request['host']) && $request['host']) ? $request['host'] : null,
-            'port' => (isset($request['port']) && $request['port']) ? $request['port'] : null,
+            'host' => $host,
+            'port' => $port,
             'resource' => (isset($request['url']) && $request['url']) ? $request['url'] : null,
             'ts' => (isset($attributes['ts']) && $attributes['ts']) ? $attributes['ts'] : null,
             'nonce' => (isset($attributes['nonce']) && $attributes['nonce']) ? $attributes['nonce'] : null,
@@ -66,12 +89,12 @@ class Server
          * Verify required header attributes
          */
 
-        if (!$attributes['id'] ||
-            !$attributes['ts'] ||
-            !$attributes['nonce'] ||
-            !$attributes['mac']
+        if (!(isset($attributes['id']) && $attributes['id']) ||
+            !(isset($attributes['ts']) && $attributes['ts']) ||
+            !(isset($attributes['nonce']) && $attributes['nonce']) ||
+            !(isset($attributes['mac']) && $attributes['mac'])
         ) {
-            throw new ServerException('Missing attributes');
+            throw new BadRequestException('Missing attributes');
         }
 
         /*
@@ -81,7 +104,7 @@ class Server
         try {
             $credentials = $credentialsFunc($attributes['id']);
         } catch (\Exception $e) {
-            throw new ServerException($e->getMessage());
+            throw new ServerException($e->getMessage(), $e->getCode());
         }
 
         if (!$credentials) {
@@ -99,7 +122,7 @@ class Server
             throw new ServerException('Invalid credentials');
         }
 
-        if (in_array($credentials['algorithm'], $Crypto->algorithms) === false) {
+        if (in_array($credentials['algorithm'], $this->Crypto->algorithms) === false) {
             throw new ServerException('Unknown algorithm');
         }
 
@@ -107,7 +130,7 @@ class Server
          * Calculate MAC
          */
 
-        $mac = $Crypto->calculateMac('header', $credentials, $artifacts);
+        $mac = $this->Crypto->calculateMac('header', $credentials, $artifacts);
 
         if (!hash_equals($mac, $attributes['mac'])) {
             throw new UnauthorizedException('Bad MAC');
@@ -117,17 +140,17 @@ class Server
          * Check payload hash
          */
 
-        if ((isset($options['payload']) && $options['payload']) ||
-            $options['payload'] === ''
+        if (isset($options['payload']) &&
+            ($options['payload'] || $options['payload'] === '')
         ) {
-            if ((isset($attributes['hash']) && $attributes['hash'])) {
+            if (!(isset($attributes['hash']) && $attributes['hash'])) {
                 throw new UnauthorizedException('Missing required payload hash');
             }
 
-            $hash = $Crypto->calculatePayloadHash(
-                $options['payload'],
+            $hash = $this->Crypto->calculatePayloadHash(
+                isset($options['payload']) ? $options['payload'] : null,
                 $credentials['algorithm'],
-                $request['contentType']
+                isset($request['contentType']) ? $request['contentType'] : null
             );
 
             if (!hash_equals($hash, $attributes['hash'])) {
@@ -152,7 +175,8 @@ class Server
          */
 
         if (abs($attributes['ts'] * 1000 - $now) > ($options['timestampSkewSec'] * 1000)) {
-            throw new UnauthorizedException('Stale timestamp');
+            $tsm = $this->Crypto->timestampMessage($credentials, $options['localtimeOffsetMsec']);
+            throw new UnauthorizedException('Stale timestamp', $tsm);
         }
 
         // If at this point, then authentication was successful
@@ -162,7 +186,7 @@ class Server
 
     public function authenticatePayload($payload, $credentials, $artifacts, $contentType)
     {
-        $calculatedHash = $Crypto->calculatePayloadHash($payload, $credentials['algorithm'], $contentType);
+        $calculatedHash = $this->Crypto->calculatePayloadHash($payload, $credentials['algorithm'], $contentType);
 
         if (!hash_equals($calculatedHash, $artifacts['hash'])) {
             throw new UnauthorizedException('Bad payload hash');
@@ -171,7 +195,7 @@ class Server
 
     public function authenticatePayloadHash($calculatedHash, $artifacts)
     {
-        if (!hash_equals($calculatedHash, $artifacts)) {
+        if (!hash_equals($calculatedHash, $artifacts['hash'])) {
             throw new UnauthorizedException('Bad payload hash');
         }
     }
@@ -193,8 +217,8 @@ class Server
             unset($artifacts['mac']);
         }
 
-        $artifacts['hash'] = $options['hash'];
-        $artifacts['ext'] = $options['ext'];
+        $artifacts['hash'] = isset($options['hash']) ? $options['hash'] : null;
+        $artifacts['ext'] = isset($options['ext']) ? $options['ext'] : null;
 
         /*
          * Validate credentials
@@ -207,7 +231,7 @@ class Server
             throw new ServerException('Invalid credentials');
         }
 
-        if (in_array($credentials['algorithm'], $Crypto->algorithms) === false) {
+        if (in_array($credentials['algorithm'], $this->Crypto->algorithms) === false) {
             throw new ServerException('Unknown algorithm');
         }
 
@@ -218,14 +242,14 @@ class Server
         if (!$artifacts['hash'] &&
             ((isset($options['payload']) && $options['payload']) || $options['payload'] === '')
         ) {
-            $artifacts['hash'] = $Crypto->calculatePayloadHash(
+            $artifacts['hash'] = $this->Crypto->calculatePayloadHash(
                 $options['payload'],
                 $credentials['algorithm'],
                 $options['contentType']
             );
         }
 
-        $mac = $Crypto->calculateMac('response', $credentials, $artifacts);
+        $mac = $this->Crypto->calculateMac('response', $credentials, $artifacts);
 
         /*
          * Construct header
@@ -233,11 +257,10 @@ class Server
 
         $header = "Hawk mac=\"$mac\"" . ($artifacts['hash'] ? ", hash=\"{$artifacts['hash']}\"" : '');
 
-        if (!isset($artifacts['ext']) &&
-            $artifacts['ext'] !== null &&
+        if ($artifacts['ext'] !== null &&
             $artifacts['ext'] !== '' // Other falsey values allowed
         ) {
-            $header .= ", ext=\"{$Utils->escapeHeaderAttribute($artifacts['ext'])}\"";
+            $header .= ", ext=\"{$this->Utils->escapeHeaderAttribute($artifacts['ext'])}\"";
         }
 
         return $header;
@@ -248,25 +271,27 @@ class Server
         /*
          * Get application time before any other processing
          */
-
-        $now = $Utils->now($options['localtimeOffsetMsec']);
+        $options['localtimeOffsetMsec'] = isset($options['localtimeOffsetMsec'])
+            ? $options['localtimeOffsetMsec']
+            : 0;
+        $now = $this->Utils->now($options['localtimeOffsetMsec']);
 
         /*
          * Extract bewit
          */
 
-        if (strlen($request['url']) > $Utils->limits['maxMatchLength']) {
-            throw BadRequestException('Resource path exceeds max length');
+        if (strlen($request['url']) > $this->Utils->limits['maxMatchLength']) {
+            throw new BadRequestException('Resource path exceeds max length');
         }
 
-        $resource = preg_grep($this->bewitRegex, $request['url']);
+        $resource = [];
 
-        if (!$resource) {
+        if (!preg_match_all($this->bewitRegex, $request['url'], $resource)) {
             throw new UnauthorizedException();
         }
 
         // Check if bewit is empty
-        if (!(isset($resource[3]) && $resource[3])) {
+        if (!(isset($resource[3][0]) && $resource[3][0])) {
             throw new UnauthorizedException('Empty bewit');
         }
 
@@ -279,12 +304,12 @@ class Server
 
         // Check if there is some other authentication (authorization)
         if (isset($request['authorization']) && $request['authorization']) {
-            throw BadRequestException('Multiple authentications');
+            throw new BadRequestException('Multiple authentications');
         }
 
         // Parse bewit
         try {
-            $bewitString = $Utils->base64urlEncode($resource[3]);
+            $bewitString = $this->Utils->base64urlDecode($resource[3][0]);
         } catch (\Exception $e) {
             throw new BadRequestException('Invalid bewit encoding');
         }
@@ -308,17 +333,17 @@ class Server
             !$bewit['exp'] ||
             !$bewit['mac']
         ) {
-            throw BadRequestException('Missing bewit attributes');
+            throw new BadRequestException('Missing bewit attributes');
         }
 
         /*
          * Construct URL without bewit
          */
 
-        $url = $resource[1];
+        $url = $resource[1][0];
 
-        if ($resource[4]) {
-            $url = $url . $resource[2] . $resource[4];
+        if ($resource[4][0]) {
+            $url = $url . $resource[2][0] . $resource[4][0];
         }
 
         // Check expiration
@@ -333,7 +358,7 @@ class Server
         try {
             $credentials = $credentialsFunc($bewit['id']);
         } catch (\Exception $e) {
-            throw new ServerException($e->getMessage());
+            throw new ServerException($e->getMessage(), $e->getCode());
         }
 
         if (!$credentials) {
@@ -351,7 +376,7 @@ class Server
             throw new ServerException('Invalid credentials');
         }
 
-        if (in_array($credentials['algorithm'], $Crypto->algorithms) === false) {
+        if (!in_array($credentials['algorithm'], $this->Crypto->algorithms)) {
             throw new ServerException('Unknown algorithm');
         }
 
@@ -359,7 +384,7 @@ class Server
          * Calculate MAC
          */
 
-        $mac = $Crypto->calculateMac('bewit', $credentials, [
+        $mac = $this->Crypto->calculateMac('bewit', $credentials, [
             'ts' => $bewit['exp'],
             'nonce' => '',
             'method' => 'GET',
@@ -370,7 +395,7 @@ class Server
         ]);
 
         if (!hash_equals($mac, $bewit['mac'])) {
-            throw new Unauthorized('Bad MAC');
+            throw new UnauthorizedException('Bad MAC');
         }
 
         // If at this point, then authentication was successful
@@ -397,18 +422,20 @@ class Server
         /*
          * Get application time before any other processing
          */
-
-        $now = $Utils->now($options['localtimeOffsetMsec']);
+        $options['localtimeOffsetMsec'] = isset($options['localtimeOffsetMsec'])
+            ? $options['localtimeOffsetMsec']
+            : 0;
+        $now = $this->Utils->now($options['localtimeOffsetMsec']);
 
         /*
          * Validate authorization
          */
 
-        if (!$authorization['id'] ||
-            !$authorization['ts'] ||
-            !$authorization['nonce'] ||
-            !$authorization['hash'] ||
-            !$authorization['mac']
+        if (!(isset($authorization['id']) && $authorization['id']) ||
+            !(isset($authorization['ts']) && $authorization['ts']) ||
+            !(isset($authorization['nonce']) && $authorization['nonce']) ||
+            !(isset($authorization['hash']) && $authorization['hash']) ||
+            !(isset($authorization['mac']) && $authorization['mac'])
         ) {
             throw new BadRequestException('Invalid authorization');
         }
@@ -417,7 +444,13 @@ class Server
          * Fetch Hawk credentials
          */
 
-        $credentials = $credentialsFunc($authorization['id']);
+
+        try {
+            $credentials = $credentialsFunc($authorization['id']);
+        } catch (\Exception $e) {
+            throw new ServerException($e->getMessage(), $e->getCode());
+        }
+
 
         if (!$credentials) {
             throw new UnauthorizedException('Unknown credentials');
@@ -431,7 +464,7 @@ class Server
             throw new ServerException('Invalid credentials');
         }
 
-        if (in_array($credentials['algorithm'], $Crypto->algorithms) === false) {
+        if (in_array($credentials['algorithm'], $this->Crypto->algorithms) === false) {
             throw new ServerException('Unknown algorithm');
         }
 
@@ -451,17 +484,17 @@ class Server
          * Calculate MAC
          */
 
-        $mac = $Crypto->calculateTsMac('message', $credentials, $artifacts);
+        $mac = $this->Crypto->calculateMac('message', $credentials, $artifacts);
 
         if (!hash_equals($mac, $authorization['mac'])) {
-            throw new UnauthorizedException('Bad mac');
+            throw new UnauthorizedException('Bad MAC');
         }
 
         /*
          * Check payload hash
          */
 
-        $hash = $Crypto->calculatePayloadHash('message', $credentials['algorithm']);
+        $hash = $this->Crypto->calculatePayloadHash($message, $credentials['algorithm']);
 
         if (!hash_equals($hash, $authorization['hash'])) {
             throw new UnauthorizedException('Bad message hash');

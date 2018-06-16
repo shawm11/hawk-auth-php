@@ -12,8 +12,8 @@ class Client
 
     public function __construct()
     {
-        $Crypto = new Crypto;
-        $Utils = new Utils;
+        $this->Crypto = new Crypto;
+        $this->Utils = new Utils;
     }
 
     public function header($uri, $method, $options)
@@ -35,7 +35,7 @@ class Client
 
         $timestamp = (isset($options['timestamp']) && $options['timestamp'])
             ? $options['timestamp']
-            : $Utils->nowSecs($options['localtimeOffsetMsec']);
+            : $this->Utils->nowSecs($options['localtimeOffsetMsec']);
 
         /*
          * Validate credentials
@@ -53,7 +53,7 @@ class Client
             throw new ClientException('Invalid credentials');
         }
 
-        if (in_array($credentials['algorithm'], $Crypto->algorithms) === false) {
+        if (in_array($credentials['algorithm'], $this->Crypto->algorithms) === false) {
             throw new ClientException('Unknown algorithm');
         }
 
@@ -74,11 +74,10 @@ class Client
             'nonce' => (isset($options['nonce']) && $options['nonce'])
                 ? $options['nonce']
                 // Generate random string with 6 characters
-                : substr($Utils->base64urlEncode(openssl_random_psuedo_bytes(6)), 0, 6),
+                : substr($this->Utils->base64urlEncode(openssl_random_pseudo_bytes(6)), 0, 6),
             'method' => $method,
-            // Maintain trailing '?' when there are no query parameters
-            'resource' => $uri['path'] . '?' . (isset($uri['query']) && $uri['query']) ? ($uri['query']) : '',
-            'host' => (isset($options['host']) && $options['host']) ? $options['host'] : null,
+            'resource' => $uri['path'] .  ((isset($uri['query']) && $uri['query']) ? ('?' . $uri['query']) : ''),
+            'host' => (isset($uri['host']) && $uri['host']) ? $uri['host'] : null,
             'port' => (isset($uri['port']) && $uri['port'])
                 ? $uri['port']
                 : (isset($uri['scheme']) && $uri['scheme'] === 'https') ? 443 : 80,
@@ -95,23 +94,23 @@ class Client
         if (!$artifacts['hash'] &&
             ((isset($options['payload']) && $options['payload']) || $options['payload'] === '')
         ) {
-            $artifacts['hash'] = $Crypto->calculatePayloadHash(
-                $options['payload'],
+            $artifacts['hash'] = $this->Crypto->calculatePayloadHash(
+                isset($options['payload']) ? $options['payload'] : null,
                 $credentials['algorithm'],
-                $options['contentType']
+                isset($options['contentType']) ? $options['contentType'] : null
             );
         }
 
-        $mac = $Crypto->calculateMac('header', $credentials, $artifacts);
+        $mac = $this->Crypto->calculateMac('header', $credentials, $artifacts);
 
         /*
          * Construct header
          */
-
-        $hasExt = $artifacts['ext'] !== null && $artifacts['ext'] !== ''; // Other falsey values allowed
+        // Other falsey values allowed
+        $hashExt = $artifacts['ext'] && $artifacts['ext'] !== null && $artifacts['ext'] !== '';
         $header = "Hawk id=\"{$credentials['id']}\", ts=\"{$artifacts['ts']}\", nonce=\"{$artifacts['nonce']}\""
                 . ($artifacts['hash'] ? ", hash=\"{$artifacts['hash']}\"" : '')
-                . ($hashExt ? ", ext=\"{$Utils->escapeHeaderAttribute($artifacts['ext'])}\"" : '')
+                . ($hashExt ? ", ext=\"{$this->Utils->escapeHeaderAttribute($artifacts['ext'])}\"" : '')
                 . ", mac=\"$mac\"";
 
         if ($artifacts['app']) {
@@ -127,7 +126,7 @@ class Client
 
     public function authenticate($responseHeaders, $credentials, $artifacts, $options = [])
     {
-        $result = ['headers' => []];
+        $result = [];
 
         // Allow all lowercase header name or proper case header name
         $wwwAuthenticateHeader = isset($responseHeaders['www-authenticate'])
@@ -141,16 +140,16 @@ class Client
              */
 
             try {
-                $wwwAttributes = $Utils->parseAuthorizationHeader($wwwAuthenticateHeader, ['ts', 'tsm', 'error']);
+                $wwwAttributes = $this->Utils->parseAuthorizationHeader($wwwAuthenticateHeader, ['ts', 'tsm', 'error']);
             } catch (\Exception $e) {
                 throw new ClientException('Invalid WWW-Authenticate header');
             }
 
-            $result['headers']['www-authenticate'] = $wwwAttributes;
+            $result['www-authenticate'] = $wwwAttributes;
 
             // Validate server timestamp (not used to update clock)
-            if ($wwwAttributes['ts']) {
-                $tsm = $Crypto->calculateTsMac($wwwAttributes['ts'], $credentials);
+            if (isset($wwwAttributes['ts']) && $wwwAttributes['ts']) {
+                $tsm = $this->Crypto->calculateTsMac($wwwAttributes['ts'], $credentials);
 
                 if ($tsm !== $wwwAttributes['tsm']) {
                     throw new ClientException('Invalid server timestamp hash');
@@ -174,7 +173,7 @@ class Client
         }
 
         try {
-            $serverAuthAttributes = $Utils->parseAuthorizationHeader(
+            $serverAuthAttributes = $this->Utils->parseAuthorizationHeader(
                 $serverAuthorizationHeader,
                 ['mac', 'ext', 'hash']
             );
@@ -184,17 +183,21 @@ class Client
 
         $result['server-authorization'] = $serverAuthAttributes;
 
-        $artifacts['ext'] = $serverAuthAttributes['ext'];
-        $artifacts['hash'] = $serverAuthAttributes['hash'];
+        $artifacts['ext'] = isset($serverAuthAttributes['ext'])
+            ? $serverAuthAttributes['ext']
+            : null;
+        $artifacts['hash'] = isset($serverAuthAttributes['hash'])
+            ? $serverAuthAttributes['hash']
+            : null;
 
-        $mac = $Crypto->calculateMac('response', $credentials, $artifacts);
+        $mac = $this->Crypto->calculateMac('response', $credentials, $artifacts);
 
         if ($mac !== $serverAuthAttributes['mac']) {
             throw new ClientException('Bad response MAC');
         }
 
-        if (!(isset($options['payload']) && $options['payload']) &&
-            $options['payload'] !== ''
+        if (!isset($options['payload']) ||
+           (!$options['payload'] && $options['payload'] !== '')
         ) {
             return $result;
         }
@@ -206,7 +209,7 @@ class Client
         $contentTypeHeader = isset($responseHeaders['content-type'])
             ? $responseHeaders['content-type']
             : (isset($responseHeaders['Content-Type']) ? $responseHeaders['Content-Type'] : null);
-        $calculatedHash = $Crypto->calculatePayloadHash(
+        $calculatedHash = $this->Crypto->calculatePayloadHash(
             $options['payload'],
             $credentials['algorithm'],
             $contentTypeHeader
@@ -240,7 +243,7 @@ class Client
          * Get application time before any other processing
          */
 
-        $now = $Utils->now($options['localtimeOffsetMsec']);
+        $now = $this->Utils->now(isset($options['localtimeOffsetMsec']) ? $options['localtimeOffsetMsec'] : 0);
 
         /*
          * Validate credentials
@@ -258,7 +261,7 @@ class Client
             throw new ClientException('Invalid credentials');
         }
 
-        if (in_array($credentials['algorithm'], $Crypto->algorithms) === false) {
+        if (in_array($credentials['algorithm'], $this->Crypto->algorithms) === false) {
             throw new ClientException('Unknown algorithm');
         }
 
@@ -266,7 +269,7 @@ class Client
          * Parse URI
          */
 
-        if (gettype($uri) !== 'string') {
+        if (gettype($uri) === 'string') {
             $uri = parse_url($uri);
         }
 
@@ -275,12 +278,11 @@ class Client
          */
 
         $exp = floor($now / 1000) + $options['ttlSec'];
-        $mac = $Crypto->calculateMac('bewit', $credentials, [
+        $mac = $this->Crypto->calculateMac('bewit', $credentials, [
             'ts' => $exp,
             'nonce' => '',
             'method' => 'GET',
-            // Maintain trailing '?' when there are no query parameters
-            'resource' => $uri['path'] . '?' . (isset($uri['query']) && $uri['query']) ? ($uri['query']) : '',
+            'resource' => $uri['path'] . ((isset($uri['query']) && $uri['query']) ? ('?' . $uri['query']) : ''),
             'host' => $uri['host'],
             'port' => (isset($uri['port']) && $uri['port'])
                 ? $uri['port']
@@ -289,12 +291,12 @@ class Client
         ]);
 
         /*
-         * Construct bewit: idexpmacext
+         * Construct bewit: id\exp\mac\ext
          */
 
         $bewit = "{$credentials['id']}\\$exp\\$mac\\$ext";
 
-        return $Utils->base64urlEncode($bewit);
+        return $this->Utils->base64urlEncode($bewit);
     }
 
     public function message($host, $port, $message, $options = [])
@@ -317,7 +319,7 @@ class Client
 
         $timestamp = (isset($options['timestamp']) && $options['timestamp'])
             ? $options['timestamp']
-            : $Utils->nowSecs($options['localtimeOffsetMsec']);
+            : $this->Utils->nowSecs(isset($options['localtimeOffsetMsec']) ? $options['localtimeOffsetMsec'] : 0);
 
         /*
          * Validate credentials
@@ -335,7 +337,7 @@ class Client
             throw new ClientException('Invalid credentials');
         }
 
-        if (in_array($credentials['algorithm'], $Crypto->algorithms) === false) {
+        if (in_array($credentials['algorithm'], $this->Crypto->algorithms) === false) {
             throw new ClientException('Unknown algorithm');
         }
 
@@ -348,10 +350,10 @@ class Client
             'nonce' => (isset($options['nonce']) && $options['nonce'])
                 ? $options['nonce']
                 // Generate random string with 6 characters
-                : substr($Utils->base64urlEncode(openssl_random_psuedo_bytes(6)), 0, 6),
+                : substr($this->Utils->base64urlEncode(openssl_random_pseudo_bytes(6)), 0, 6),
             'host' => $host,
             'port' => $port,
-            'hash' => $Crypto->calculatePayloadHash($message, $credentials['algorithm'])
+            'hash' => $this->Crypto->calculatePayloadHash($message, $credentials['algorithm'])
         ];
 
         /*
@@ -363,7 +365,7 @@ class Client
             'ts' => $artifacts['ts'],
             'nonce' => $artifacts['nonce'],
             'hash' => $artifacts['hash'],
-            'mac' => $Crypto->calculateMac('message', $credentials, $artifacts)
+            'mac' => $this->Crypto->calculateMac('message', $credentials, $artifacts)
         ];
 
         return $result;

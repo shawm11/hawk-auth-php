@@ -20,7 +20,7 @@ interface UtilsInterface
      *                                      negative)
      * @return float The current time in milliseconds
      */
-    public function now($localtimeOffsetMsec);
+    public function now($localtimeOffsetMsec = 0);
 
     /**
      * Get the current time with the local time offset in seconds
@@ -30,7 +30,7 @@ interface UtilsInterface
      *                                      negative)
      * @return float  The current time in seconds
      */
-    public function nowSecs($localtimeOffsetMsec);
+    public function nowSecs($localtimeOffsetMsec = 0);
 
     /**
      * Parse Hawk HTTP Authorization header
@@ -45,7 +45,10 @@ interface UtilsInterface
      * @return array  The attributes of the Hawk Authorization header. Contains
      *                the items listed in `$keys`
      */
-    public function parseAuthorizationHeader($header, $keys);
+    public function parseAuthorizationHeader(
+        $header,
+        $keys = ['id', 'ts', 'nonce', 'hash', 'ext', 'mac', 'app', 'dlg']
+    );
 
     /**
      * Escape attribute value for use in HTTP header
