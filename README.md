@@ -165,7 +165,7 @@ function makeRequest($requestData) {
 
     try {
         $result = $hawkClient->header($uri, 'POST', $options);
-    } catch (HawkServerException $e) {
+    } catch (HawkClientException $e) {
         echo 'ERROR: ' . $e->getMessage();
         return;
     }
@@ -185,7 +185,7 @@ function makeRequest($requestData) {
 
     // Now do some stuff after receiving response (See the `responseCallback`
     // function below)
-    responseCallback($hawkClient, $credentials, $artifacts);
+    responseCallback($hawkClient, $options['credentials'], $artifacts);
 }
 
 function responseCallback($hawkClient, $credentials, $artifacts) {
@@ -202,7 +202,7 @@ function responseCallback($hawkClient, $credentials, $artifacts) {
         // If the server's response is valid, the parsed response headers are
         // returned as an array
         $parsedHeaders = $hawkClient->authenticate($responseHeaders, $credentials, $artifacts);
-    } catch (HawkServerException $e) {
+    } catch (HawkClientException $e) {
         // If the server's response is invalid, an error is thrown
         echo 'ERROR: ' . $e->getMessage();
         return;
