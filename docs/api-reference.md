@@ -252,9 +252,18 @@ server's response.
         Must be an algorithm in the [`$algorithms` array property of the
         `Crypto` class](#algorithms-property).
 
-1.  _array_ `$artifacts` — (Required) Array returned by
-    [`authenticate()`](#authenticaterequest-credentialsFunc-options). The items
-    `mac`, `hash`, and `ext` are ignored
+1.  _array_ `$artifacts` — (Required) Components to be used to construct the
+    response `Server-Authorization` HTTP header. It includes the following:
+
+    - _string_ `method` — Request method
+    - _string_ `host` — Request host
+    - _string_ `port` — Request port
+    - _string_ `resource` — URL of the request relative to the host
+    - _string_ `ts` — Timestamp (as milliseconds since January 1, 1970)
+    - _string_ `nonce` — Nonce used to create the `mac`
+    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/hueniverse/oz).
+    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/hueniverse/oz).
+    - _string_ `id` — Client's unique Hawk ID
 
 1.  _array_ `$options` — (Optional) Hawk attributes that will be integrated
     into the `Server-Authorization` header value. It includes the following:
