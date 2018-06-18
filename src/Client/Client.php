@@ -299,7 +299,7 @@ class Client
         return $this->Utils->base64urlEncode($bewit);
     }
 
-    public function message($host, $port, $message, $options = [])
+    public function message($host, $port, $message, $options)
     {
         /*
          * Validate inputs

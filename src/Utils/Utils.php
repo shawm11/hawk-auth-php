@@ -8,12 +8,6 @@ use Shawm11\Hawk\Server\UnauthorizedException;
 
 class Utils
 {
-    /**
-     * Limit the length of uris and headers to avoid a DoS attack on string
-     * matching
-     *
-     * @var array
-     */
     public $limits = [
         'maxMatchLength' => 4096
     ];

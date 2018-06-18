@@ -5,6 +5,14 @@ namespace Shawm11\Hawk\Utils;
 interface UtilsInterface
 {
     /**
+     * Limit of the length of URIs and headers to avoid a DoS attack on string
+     * matching
+     *
+     * @var array
+     */
+    public $limits;
+
+    /**
      * Parse `Content-Type` HTTP header content
      *
      * @param  string  $header  The value of the `Content-Type` HTTP header
@@ -15,8 +23,8 @@ interface UtilsInterface
     /**
      * Get the current time with the local time offset in milliseconds
      *
-     * @param  float  $localtimeOffsetMsec  Local clock time offset express in a
-     *                                      number of milliseconds (positive or
+     * @param  float  $localtimeOffsetMsec  Local clock time offset expressed as
+     *                                      a number of milliseconds (positive or
      *                                      negative)
      * @return float The current time in milliseconds
      */
@@ -33,7 +41,7 @@ interface UtilsInterface
     public function nowSecs($localtimeOffsetMsec = 0);
 
     /**
-     * Parse Hawk HTTP Authorization header
+     * Parse Hawk HTTP `Authorization` header
      *
      * @param  string  $header  Value of the `Authorization` HTTP header
      * @param  array  $keys  The names of the attributes the Hawk Authorization
@@ -51,7 +59,7 @@ interface UtilsInterface
     );
 
     /**
-     * Escape attribute value for use in HTTP header
+     * Escape the given attribute value for use in HTTP header
      *
      * @param  string  $attribute  Header attribute value to escape
      * @return string  Escaped attribute value
@@ -62,7 +70,7 @@ interface UtilsInterface
      * Encode the data given into a URL-safe Base64 encoded string.
      * Follows RFC 4648.
      *
-     * @param string $data  The data to encode into a URL-safe Base64 string
+     * @param  string  $data  The data to encode into a URL-safe Base64 string
      * @return string
      */
     public function base64urlEncode($data);
@@ -71,7 +79,7 @@ interface UtilsInterface
      * Decode the given URL-safe Base64 string.
      * Follows RFC 4648.
      *
-     * @param string $data  The URL-safe Base64 string to decode
+     * @param  string  $data  The URL-safe Base64 string to decode
      * @return string
      */
     public function base64urlDecode($data);

@@ -5,12 +5,19 @@ namespace Shawm11\Hawk\Crypto;
 interface CryptoInterface
 {
     /**
+     * Supported HMAC algorithms
+     *
+     * @var array
+     */
+    public $algorithms;
+
+    /**
      * Calculate the HMAC digest using the given credentials
      *
      * @param  string  $type  A string that indicates the purpose of the MAC.
-     *                        Examples: 'header', 'reponse', 'bewit', 'message'
+     *                        Examples: 'header', 'response', 'bewit', 'message'
      * @param  array  $credentials  Hawk credentials array, which contains
-     *                              `key`, `algorithm`, and `user`
+     *                              `key`, and `algorithm`
      * @param  array  $options  Contains `method`, `resource`, `host`, `port`,
      *                          `ts`, `nonce`, `hash`, `ext`, `app`, and `dlg`
      * @return string  The HMAC digest
@@ -61,5 +68,5 @@ interface CryptoInterface
      * @return array  Contains the timestamp for the current time ("now") and
      *                an HMAC digest of the timestamp
      */
-    public function timestampMessage($credentials, $localtimeOffsetMsec);
+    public function timestampMessage($credentials, $localtimeOffsetMsec = 0);
 }

@@ -23,7 +23,7 @@ interface ClientInterface
     public function header($uri, $method, $options);
 
     /**
-     * Validate the server's repsonse
+     * Validate the server's response
      *
      * @param  array  $responseHeaders  An associative array of the HTTP headers
      *                                  in the server's response
@@ -62,5 +62,5 @@ interface ClientInterface
      * @return array  Contains the authorization string (`mac`) along with the
      *                components used to create the authorization string
      */
-    public function message($host, $port, $message, $options = []);
+    public function message($host, $port, $message, $options);
 }

@@ -14,12 +14,6 @@ class Crypto
      */
     protected $headerVersion = '1';
 
-
-    /**
-     * Supported HMAC algorithms
-     *
-     * @var array
-     */
     public $algorithms = ['sha1', 'sha256'];
 
 
@@ -96,7 +90,7 @@ class Crypto
         return base64_encode($hmac);
     }
 
-    public function timestampMessage($credentials, $localtimeOffsetMsec)
+    public function timestampMessage($credentials, $localtimeOffsetMsec = 0)
     {
         $now = (new Utils)->nowSecs($localtimeOffsetMsec);
         $tsm = $this->calculateTsMac($now, $credentials);
