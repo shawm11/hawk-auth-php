@@ -116,13 +116,14 @@ class ServerTest extends TestCase
                         'host' => 'example.com',
                         'port' => 8080,
                         'authorization' => 'Hawk id="123456", ts="1357926341", nonce="1AwuJD"'
-                                         . ', hash="qAiXIVv+yjDATneWxZP2YCTa9aHRgQdnH9b3Wc+o3dg="'
-                                         . ', ext="some-app-data", mac="UeYcj5UoTVaAWXNvJfLVia7kU3VabxCqrccXP8sUGC4="'
+                                         . ', hash="1kFuupNATsh9T4rfyh1itrLl9hRTWlkXV97J7IJ4QKk="'
+                                         . ', ext="some-app-data", mac="Y9wtRQxYhRa8q4oh9h/W4mfxkrZU2jFpyR7gEKN1uL0="'
                     ],
                     function ($id) {
                         return $this->credentialsFunc($id);
                     },
                     [
+                        'payload' => 'body',
                         'localtimeOffsetMsec' => 1357926341000 - (new Utils)->now()
                     ]
                 )['credentials'];
