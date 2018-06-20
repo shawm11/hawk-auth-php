@@ -5,11 +5,11 @@ namespace Shawm11\Hawk\Server;
 class UnauthorizedException extends ServerException
 {
     /**
-     * The value of the `WWW-Authenticate` header for server's response
+     * Keys & values the include in the `WWW-Authenticate`
      *
      * @var string
      */
-    protected $wwwAuthenticateHeader;
+    protected $wwwAuthenticateHeaderAttributes = [];
 
     /**
      * @param string  $message  The Exception message to throw. It is also
@@ -27,24 +27,18 @@ class UnauthorizedException extends ServerException
     {
         parent::__construct($message, $code, $previous);
 
-        /*
-         * Create WWW-Authenticate header value for server's response
-         */
+        $this->wwwAuthenticateHeaderAttributes = $wwwAuthenticateHeaderAttributes;
+    }
 
-        $this->wwwAuthenticateHeader = 'Hawk';
-
-        foreach ($wwwAuthenticateHeaderAttributes as $key => $value) {
-            $value = $value === null ? '': $value;
-
-            $this->wwwAuthenticateHeader .= " $key=\"$value\",";
-        }
-
-        if ($message) {
-            $this->wwwAuthenticateHeader .= " error=\"$message\"";
-        } else {
-            // Remove comma at the end
-            $this->wwwAuthenticateHeader = rtrim($this->wwwAuthenticateHeader, ',');
-        }
+    /**
+     * Get the associative array of keys & values included in the
+     * `WWW-Authenticate`
+     *
+     * @return array
+     */
+    public function getWwwAuthenticateHeaderAttributes()
+    {
+        return $this->wwwAuthenticateHeaderAttributes;
     }
 
     /**
@@ -55,6 +49,21 @@ class UnauthorizedException extends ServerException
      */
     public function getWwwAuthenticateHeader()
     {
-        return $this->wwwAuthenticateHeader;
+        $wwwAuthenticateHeader = 'Hawk';
+
+        foreach ($this->wwwAuthenticateHeaderAttributes as $key => $value) {
+            $value = $value === null ? '': $value;
+
+            $wwwAuthenticateHeader .= " $key=\"$value\",";
+        }
+
+        if ($this->message) {
+            $wwwAuthenticateHeader .= " error=\"$this->message\"";
+        } else {
+            // Remove comma at the end
+            $wwwAuthenticateHeader = rtrim($wwwAuthenticateHeader, ',');
+        }
+
+        return $wwwAuthenticateHeader;
     }
 }

@@ -34,6 +34,7 @@ Table of Contents
 -   [`Server\UnauthorizedException` Class](#serverunauthorizedexception-class)
     - [`getCode()` (`UnauthorizedException` Class)](#getcode-unauthorizedexception-class)
     - [`getMessage()` (`UnauthorizedException` Class)](#getmessage-unauthorizedexception-class)
+    - [`getWwwAuthenticateHeaderAttributes()`](#getwwwauthenticateheaderattributes)
     - [`getWwwAuthenticateHeader()`](#getwwwauthenticateheader)
 
 -   [`Client\Client` Class](#clientclient-class)
@@ -445,6 +446,11 @@ always `401`, as an integer.
 ### `getMessage()` (`UnauthorizedException` Class)
 
 Inherited method from PHP's `Exception` class. Gives the error message text.
+
+### `getWwwAuthenticateHeaderAttributes()`
+
+Get the associative array of keys and values included in the HTTP
+`WWW-Authenticate` header should be set to in the server's response. 
 
 ### `getWwwAuthenticateHeader()`
 
