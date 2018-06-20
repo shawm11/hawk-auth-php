@@ -16,6 +16,7 @@ interface ClientInterface
      *                          `credentials`, `ext`, `timestamp`, `nonce`,
      *                          `localtimeOffsetMsec`, `payload`, `contentType`,
      *                          `hash`, `app`, and `dlg`
+     * @throws ClientException
      * @return array  Contains the `header` (the string the HTTP `Authorization`
      *                header should be set to) and the `artifacts` (the
      *                components used to construct the `header`)
@@ -46,6 +47,7 @@ interface ClientInterface
      *                             array from `parse_url()`
      * @param  array  $options  Contains `credentials`, `ttlSec`, `ext`, and
      *                          `localtimeOffsetMsec`
+     * @throws ClientException
      * @return string  The bewit
      */
     public function getBewit($uri, $options);
@@ -59,6 +61,7 @@ interface ClientInterface
      * @param  string  $message
      * @param  array  $options  Contains `credentials`, `timestamp`, `nonce`,
      *                          and `localtimeOffsetMsec`
+     * @throws ClientException
      * @return array  Contains the authorization string (`mac`) along with the
      *                components used to create the authorization string
      */
