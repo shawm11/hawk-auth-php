@@ -6,8 +6,14 @@ use Shawm11\Hawk\HawkException;
 use Shawm11\Hawk\Server\BadRequestException;
 use Shawm11\Hawk\Server\UnauthorizedException;
 
-class Utils
+class Utils implements UtilsInterface
 {
+    /**
+     * Limit of the length of URIs and headers to avoid a DoS attack on string
+     * matching
+     *
+     * @var array
+     */
     public $limits = [
         'maxMatchLength' => 4096
     ];

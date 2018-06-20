@@ -4,7 +4,7 @@ namespace Shawm11\Hawk\Crypto;
 
 use Shawm11\Hawk\Utils\Utils;
 
-class Crypto
+class Crypto implements CryptoInterface
 {
     /**
      * MAC normalization format version. Prevents comparison of MAC values
@@ -14,6 +14,11 @@ class Crypto
      */
     protected $headerVersion = '1';
 
+    /**
+     * Supported HMAC algorithms
+     *
+     * @var array
+     */
     public $algorithms = ['sha1', 'sha256'];
 
 

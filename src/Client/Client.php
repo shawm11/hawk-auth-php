@@ -5,7 +5,7 @@ namespace Shawm11\Hawk\Client;
 use Shawm11\Hawk\Crypto\Crypto;
 use Shawm11\Hawk\Utils\Utils;
 
-class Client
+class Client implements ClientInterface
 {
     protected $Crypto;
     protected $Utils;

@@ -5,7 +5,7 @@ namespace Shawm11\Hawk\Server;
 use Shawm11\Hawk\Crypto\Crypto;
 use Shawm11\Hawk\Utils\Utils;
 
-class Server
+class Server implements ServerInterface
 {
     protected $Crypto;
     protected $Utils;

@@ -5,13 +5,6 @@ namespace Shawm11\Hawk\Crypto;
 interface CryptoInterface
 {
     /**
-     * Supported HMAC algorithms
-     *
-     * @var array
-     */
-    public $algorithms;
-
-    /**
      * Calculate the HMAC digest using the given credentials
      *
      * @param  string  $type  A string that indicates the purpose of the MAC.

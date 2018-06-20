@@ -5,14 +5,6 @@ namespace Shawm11\Hawk\Utils;
 interface UtilsInterface
 {
     /**
-     * Limit of the length of URIs and headers to avoid a DoS attack on string
-     * matching
-     *
-     * @var array
-     */
-    public $limits;
-
-    /**
      * Parse `Content-Type` HTTP header content
      *
      * @param  string  $header  The value of the `Content-Type` HTTP header
