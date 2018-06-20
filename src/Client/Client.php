@@ -35,7 +35,7 @@ class Client implements ClientInterface
 
         $timestamp = (isset($options['timestamp']) && $options['timestamp'])
             ? $options['timestamp']
-            : $this->Utils->nowSecs($options['localtimeOffsetMsec']);
+            : $this->Utils->nowSecs(isset($options['localtimeOffsetMsec']) ? $options['localtimeOffsetMsec'] : 0);
 
         /*
          * Validate credentials
@@ -92,7 +92,7 @@ class Client implements ClientInterface
          */
 
         if (!$artifacts['hash'] &&
-            ((isset($options['payload']) && $options['payload']) || $options['payload'] === '')
+            (isset($options['payload']) && ($options['payload'] || $options['payload'] === ''))
         ) {
             $artifacts['hash'] = $this->Crypto->calculatePayloadHash(
                 isset($options['payload']) ? $options['payload'] : null,
