@@ -7,7 +7,7 @@ Table of Contents
 -   [Namespace](#namespace)
 
 -   [`Server\Server` Class](#serverserver-class)
-    -   [`authenticate($request, $credentialsFunc, $options)`](#authenticaterequest-credentialsFunc-options)
+    -   [`authenticate($request, $credentialsFunc, $options)`](#authenticaterequest-credentialsfunc-options)
         - [`authenticate` (`Server` Class) Parameters](#authenticate-server-class-parameters)
 
     -   [`authenticatePayload($payload, $credentials, $artifacts, $contentType)`](#authenticatepayloadpayload-credentials-artifacts-contenttype`)
@@ -450,7 +450,7 @@ Inherited method from PHP's `Exception` class. Gives the error message text.
 ### `getWwwAuthenticateHeaderAttributes()`
 
 Get the associative array of keys and values included in the HTTP
-`WWW-Authenticate` header should be set to in the server's response. 
+`WWW-Authenticate` header should be set to in the server's response.
 
 ### `getWwwAuthenticateHeader()`
 
