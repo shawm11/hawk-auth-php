@@ -76,7 +76,8 @@ class Client implements ClientInterface
                 // Generate random string with 6 characters
                 : substr($this->Utils->base64urlEncode(openssl_random_pseudo_bytes(6)), 0, 6),
             'method' => $method,
-            'resource' => $uri['path'] .  ((isset($uri['query']) && $uri['query']) ? ('?' . $uri['query']) : ''),
+            'resource' => (empty($uri['path']) ? '' : $uri['path'])
+                        . (empty($uri['query']) ? '' : ('?' . $uri['query'])),
             'host' => (isset($uri['host']) && $uri['host']) ? $uri['host'] : null,
             'port' => (isset($uri['port']) && $uri['port'])
                 ? $uri['port']

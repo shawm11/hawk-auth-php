@@ -43,7 +43,8 @@ class Crypto implements CryptoInterface
 
         if ($resource && $resource[0] !== '/') {
             $url = parse_url($resource);
-            $resource = $url['path'] . (isset($url['query']) && $url['query']) ? ('?'. $url['query']) : '';
+            $resource = (empty($url['path']) ? '' : $url['path'])
+                      . (empty($url['query']) ? '' : ('?' . $url['query']));
         }
 
         /*
