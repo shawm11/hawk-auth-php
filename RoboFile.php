@@ -108,7 +108,6 @@ class RoboFile extends \Robo\Tasks
         return null;
     }
 
-
     /**
      * Check PHP files for style errors
      */

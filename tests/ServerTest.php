@@ -228,7 +228,7 @@ class ServerTest extends TestCase
                     'nonceFunc' => function ($key, $nonce, $ts) use (&$memoryCache) {
                         $i = $key . $nonce;
 
-                        if (isset($memoryCache[$i]) && $memoryCache[$i]) {
+                        if (!empty($memoryCache[$i])) {
                             throw new \Exception();
                         }
 
@@ -303,7 +303,7 @@ class ServerTest extends TestCase
                     'nonceFunc' => function ($key, $nonce, $ts) use (&$memoryCache) {
                         $i = $key . $nonce;
 
-                        if (isset($memoryCache[$i]) && $memoryCache[$i]) {
+                        if (!empty($memoryCache[$i])) {
                             throw new \Exception();
                         }
 

@@ -88,7 +88,7 @@ class Utils implements UtilsInterface
             throw new UnauthorizedException;
         };
 
-        $attributesString = (isset($headerParts[2][0]) && $headerParts[2][0]) ? $headerParts[2][0] : null;
+        $attributesString = empty($headerParts[2][0]) ? null : $headerParts[2][0];
 
         if (!$attributesString) {
             throw new BadRequestException('Invalid header syntax');

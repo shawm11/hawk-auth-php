@@ -37,9 +37,9 @@ class Crypto implements CryptoInterface
          * Get resource URL
          */
 
-        $resource = (isset($options['resource']) && $options['resource'])
-            ? $options['resource']
-            : '';
+        $resource = empty($options['resource'])
+            ? ''
+            : $options['resource'];
 
         if ($resource && $resource[0] !== '/') {
             $url = parse_url($resource);
@@ -54,21 +54,21 @@ class Crypto implements CryptoInterface
         $normalized = "hawk.{$this->headerVersion}.$type\n"
                     . "{$options['ts']}\n"
                     . "{$options['nonce']}\n"
-                    . strtoupper((isset($options['method']) && $options['method']) ? $options['method'] : '') . "\n"
+                    . strtoupper(empty($options['method']) ? '' : $options['method']) . "\n"
                     . "$resource\n"
                     . strtolower($options['host']) . "\n"
                     . "{$options['port']}\n"
-                    . ((isset($options['hash']) && $options['hash']) ? $options['hash'] : '') . "\n";
+                    . (empty($options['hash']) ? '' : $options['hash']) . "\n";
 
-        if (isset($options['ext']) && $options['ext']) {
+        if (!empty($options['ext'])) {
             $normalized .= str_replace("\n", '\n', str_replace('\\', '\\\\', $options['ext']));
         }
 
         $normalized .= "\n";
 
-        if (isset($options['app']) && $options['app']) {
+        if (!empty($options['app'])) {
             $normalized .= "{$options['app']}\n"
-                        . ((isset($options['dlg']) && $options['dlg']) ? $options['dlg'] : '') . "\n";
+                        . (empty($options['dlg']) ? '' : $options['dlg']) . "\n";
         }
 
         return $normalized;

@@ -33,22 +33,22 @@ class Client implements ClientInterface
          * Get application time before any other processing
          */
 
-        $timestamp = (isset($options['timestamp']) && $options['timestamp'])
-            ? $options['timestamp']
-            : $this->Utils->nowSecs(isset($options['localtimeOffsetMsec']) ? $options['localtimeOffsetMsec'] : 0);
+        $timestamp = empty($options['timestamp'])
+            ? $this->Utils->nowSecs(isset($options['localtimeOffsetMsec']) ? $options['localtimeOffsetMsec'] : 0)
+            : $options['timestamp'];
 
         /*
          * Validate credentials
          */
 
-        $credentials = (isset($options['credentials']) && $options['credentials'])
-            ? $options['credentials']
-            : null;
+        $credentials = empty($options['credentials'])
+            ? null
+            : $options['credentials'];
 
         if (!$credentials ||
-            !(isset($credentials['id']) && $credentials['id']) ||
-            !(isset($credentials['key']) && $credentials['key']) ||
-            !(isset($credentials['algorithm']) && $credentials['algorithm'])
+            empty($credentials['id']) ||
+            empty($credentials['key']) ||
+            empty($credentials['algorithm'])
         ) {
             throw new ClientException('Invalid credentials');
         }
@@ -71,21 +71,21 @@ class Client implements ClientInterface
 
         $artifacts = [
             'ts' => $timestamp,
-            'nonce' => (isset($options['nonce']) && $options['nonce'])
-                ? $options['nonce']
+            'nonce' => empty($options['nonce'])
                 // Generate random string with 6 characters
-                : substr($this->Utils->base64urlEncode(openssl_random_pseudo_bytes(6)), 0, 6),
+                ? substr($this->Utils->base64urlEncode(openssl_random_pseudo_bytes(6)), 0, 6)
+                : $options['nonce'],
             'method' => $method,
             'resource' => (empty($uri['path']) ? '' : $uri['path'])
                         . (empty($uri['query']) ? '' : ('?' . $uri['query'])),
-            'host' => (isset($uri['host']) && $uri['host']) ? $uri['host'] : null,
-            'port' => (isset($uri['port']) && $uri['port'])
-                ? $uri['port']
-                : (isset($uri['scheme']) && $uri['scheme'] === 'https') ? 443 : 80,
-            'hash' => (isset($options['hash']) && $options['hash']) ? $options['hash'] : null,
-            'ext' => (isset($options['ext']) && $options['ext']) ? $options['ext'] : null,
-            'app' => (isset($options['app']) && $options['app']) ? $options['app'] : null,
-            'dlg' => (isset($options['dlg']) && $options['dlg']) ? $options['dlg'] : null
+            'host' => empty($uri['host']) ? null : $uri['host'],
+            'port' => empty($uri['port'])
+                ? (isset($uri['scheme']) && $uri['scheme'] === 'https') ? 443 : 80
+                : $uri['port'],
+            'hash' => empty($options['hash']) ? null : $options['hash'],
+            'ext' => empty($options['ext']) ? null : $options['ext'],
+            'app' => empty($options['app']) ? null : $options['app'],
+            'dlg' => empty($options['dlg']) ? null : $options['dlg']
         ];
 
         /*
@@ -149,7 +149,7 @@ class Client implements ClientInterface
             $result['www-authenticate'] = $wwwAttributes;
 
             // Validate server timestamp (not used to update clock)
-            if (isset($wwwAttributes['ts']) && $wwwAttributes['ts']) {
+            if (!empty($wwwAttributes['ts'])) {
                 $tsm = $this->Crypto->calculateTsMac($wwwAttributes['ts'], $credentials);
 
                 if ($tsm !== $wwwAttributes['tsm']) {
@@ -167,9 +167,7 @@ class Client implements ClientInterface
             ? $responseHeaders['server-authorization']
             : (isset($responseHeaders['Server-Authorization']) ? $responseHeaders['Server-Authorization'] : null);
 
-        if (!$serverAuthorizationHeader &&
-            !(isset($options['required']) && $options['required'])
-        ) {
+        if (!$serverAuthorizationHeader && empty($options['required'])) {
             return $result;
         }
 
@@ -203,7 +201,7 @@ class Client implements ClientInterface
             return $result;
         }
 
-        if (!(isset($serverAuthAttributes['hash']) && $serverAuthAttributes['hash'])) {
+        if (empty($serverAuthAttributes['hash'])) {
             throw new ClientException('Missing response hash attribute');
         }
 
@@ -229,11 +227,11 @@ class Client implements ClientInterface
          * Validate inputs
          */
 
-        if (!(isset($uri) && $uri) ||
+        if (empty($uri) ||
             (gettype($uri) !== 'string' && gettype($uri) !== 'array') ||
             !$options ||
             gettype($options) !== 'array' ||
-            !(isset($options['ttlSec']) && $options['ttlSec'])
+            empty($options['ttlSec'])
         ) {
             throw new ClientException('Invalid inputs');
         }
@@ -250,14 +248,14 @@ class Client implements ClientInterface
          * Validate credentials
          */
 
-        $credentials = (isset($options['credentials']) && $options['credentials'])
-            ? $options['credentials']
-            : null;
+        $credentials = empty($options['credentials'])
+            ? null
+            : $options['credentials'];
 
         if (!$credentials ||
-            !(isset($credentials['id']) && $credentials['id']) ||
-            !(isset($credentials['key']) && $credentials['key']) ||
-            !(isset($credentials['algorithm']) && $credentials['algorithm'])
+            empty($credentials['id']) ||
+            empty($credentials['key']) ||
+            empty($credentials['algorithm'])
         ) {
             throw new ClientException('Invalid credentials');
         }
@@ -283,11 +281,11 @@ class Client implements ClientInterface
             'ts' => $exp,
             'nonce' => '',
             'method' => 'GET',
-            'resource' => $uri['path'] . ((isset($uri['query']) && $uri['query']) ? ('?' . $uri['query']) : ''),
+            'resource' => $uri['path'] . (empty($uri['query']) ? '' : ('?' . $uri['query'])),
             'host' => $uri['host'],
-            'port' => (isset($uri['port']) && $uri['port'])
-                ? $uri['port']
-                : (isset($uri['scheme']) && $uri['scheme'] === 'https') ? 443 : 80,
+            'port' => empty($uri['port'])
+                ? (isset($uri['scheme']) && $uri['scheme'] === 'https') ? 443 : 80
+                : $uri['port'],
             'ext' => $ext
         ]);
 
@@ -318,22 +316,22 @@ class Client implements ClientInterface
          * Get application time before any other processing
          */
 
-        $timestamp = (isset($options['timestamp']) && $options['timestamp'])
-            ? $options['timestamp']
-            : $this->Utils->nowSecs(isset($options['localtimeOffsetMsec']) ? $options['localtimeOffsetMsec'] : 0);
+        $timestamp = empty($options['timestamp'])
+            ? $this->Utils->nowSecs(isset($options['localtimeOffsetMsec']) ? $options['localtimeOffsetMsec'] : 0)
+            : $options['timestamp'];
 
         /*
          * Validate credentials
          */
 
-        $credentials = (isset($options['credentials']) && $options['credentials'])
-            ? $options['credentials']
-            : null;
+        $credentials = empty($options['credentials'])
+            ? null
+            : $options['credentials'];
 
         if (!$credentials ||
-            !(isset($credentials['id']) && $credentials['id']) ||
-            !(isset($credentials['key']) && $credentials['key']) ||
-            !(isset($credentials['algorithm']) && $credentials['algorithm'])
+            empty($credentials['id']) ||
+            empty($credentials['key']) ||
+            empty($credentials['algorithm'])
         ) {
             throw new ClientException('Invalid credentials');
         }
@@ -348,10 +346,10 @@ class Client implements ClientInterface
 
         $artifacts = [
             'ts' => $timestamp,
-            'nonce' => (isset($options['nonce']) && $options['nonce'])
-                ? $options['nonce']
+            'nonce' => empty($options['nonce'])
                 // Generate random string with 6 characters
-                : substr($this->Utils->base64urlEncode(openssl_random_pseudo_bytes(6)), 0, 6),
+                ? substr($this->Utils->base64urlEncode(openssl_random_pseudo_bytes(6)), 0, 6)
+                : $options['nonce'],
             'host' => $host,
             'port' => $port,
             'hash' => $this->Crypto->calculatePayloadHash($message, $credentials['algorithm'])

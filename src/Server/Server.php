@@ -30,9 +30,9 @@ class Server implements ServerInterface
          * Default options
          */
 
-        $options['timestampSkewSec'] = (isset($options['timestampSkewSec']) && $options['timestampSkewSec'])
-            ? $options['timestampSkewSec']
-            : 60;
+        $options['timestampSkewSec'] = empty($options['timestampSkewSec'])
+            ? 60
+            : $options['timestampSkewSec'];
 
         /*
          * Get application time before any other processing
@@ -47,12 +47,12 @@ class Server implements ServerInterface
          * Check host and port
          */
 
-        $host = (isset($options['host']) && $options['host'])
-            ? $options['host']
-            : ((isset($request['host']) && $request['host']) ? $request['host'] : null);
-        $port = (isset($options['port']) && $options['port'])
-            ? $options['port']
-            : ((isset($request['port']) && $request['port']) ? $request['port'] : null);
+        $host = empty($options['host'])
+            ? (empty($request['host']) ? null : $request['host'])
+            : $options['host'];
+        $port = empty($options['port'])
+            ? (empty($request['port']) ? null : $request['port'])
+            : $options['port'];
 
         if (!$host || !$port) {
             throw new BadRequestException('Invalid Host header');
@@ -71,28 +71,28 @@ class Server implements ServerInterface
          */
 
         $artifacts = [
-            'method' => (isset($request['method']) && $request['method']) ? $request['method'] : null,
+            'method' => empty($request['method']) ? null : $request['method'],
             'host' => $host,
             'port' => $port,
-            'resource' => (isset($request['url']) && $request['url']) ? $request['url'] : null,
-            'ts' => (isset($attributes['ts']) && $attributes['ts']) ? $attributes['ts'] : null,
-            'nonce' => (isset($attributes['nonce']) && $attributes['nonce']) ? $attributes['nonce'] : null,
-            'hash' => (isset($attributes['hash']) && $attributes['hash']) ? $attributes['hash'] : null,
-            'ext' => (isset($attributes['ext']) && $attributes['ext']) ? $attributes['ext'] : null,
-            'app' => (isset($attributes['app']) && $attributes['app']) ? $attributes['app'] : null,
-            'dlg' => (isset($attributes['dlg']) && $attributes['dlg']) ? $attributes['dlg'] : null,
-            'mac' => (isset($attributes['mac']) && $attributes['mac']) ? $attributes['mac'] : null,
-            'id' => (isset($attributes['id']) && $attributes['id']) ? $attributes['id'] : null
+            'resource' => empty($request['url']) ? null : $request['url'],
+            'ts' => empty($attributes['ts']) ? null : $attributes['ts'],
+            'nonce' => empty($attributes['nonce']) ? null : $attributes['nonce'],
+            'hash' => empty($attributes['hash']) ? null : $attributes['hash'],
+            'ext' => empty($attributes['ext']) ? null : $attributes['ext'],
+            'app' => empty($attributes['app']) ? null : $attributes['app'],
+            'dlg' => empty($attributes['dlg']) ? null : $attributes['dlgdlg'],
+            'mac' => empty($attributes['mac']) ? null : $attributes['mac'],
+            'id' => empty($attributes['id']) ? null : $attributes['id']
         ];
 
         /*
          * Verify required header attributes
          */
 
-        if (!(isset($attributes['id']) && $attributes['id']) ||
-            !(isset($attributes['ts']) && $attributes['ts']) ||
-            !(isset($attributes['nonce']) && $attributes['nonce']) ||
-            !(isset($attributes['mac']) && $attributes['mac'])
+        if (empty($attributes['id']) ||
+            empty($attributes['ts']) ||
+            empty($attributes['nonce']) ||
+            empty($attributes['mac'])
         ) {
             throw new BadRequestException('Missing attributes');
         }
@@ -116,9 +116,7 @@ class Server implements ServerInterface
             'artifacts' => $artifacts
         ];
 
-        if (!(isset($credentials['key']) && $credentials['key']) ||
-            !(isset($credentials['algorithm']) && $credentials['algorithm'])
-        ) {
+        if (empty($credentials['key']) || empty($credentials['algorithm'])) {
             throw new ServerException('Invalid credentials');
         }
 
@@ -143,7 +141,7 @@ class Server implements ServerInterface
         if (isset($options['payload']) &&
             ($options['payload'] || $options['payload'] === '')
         ) {
-            if (!(isset($attributes['hash']) && $attributes['hash'])) {
+            if (empty($attributes['hash'])) {
                 throw new UnauthorizedException('Missing required payload hash');
             }
 
@@ -162,7 +160,7 @@ class Server implements ServerInterface
          * Check nonce
          */
 
-        if (isset($options['nonceFunc']) && $options['nonceFunc']) {
+        if (!empty($options['nonceFunc'])) {
             try {
                 $options['nonceFunc']($credentials['key'], $attributes['nonce'], $attributes['ts']);
             } catch (\Exception $e) {
@@ -225,8 +223,8 @@ class Server implements ServerInterface
          */
 
         if (!$credentials ||
-            !(isset($credentials['key']) && $credentials['key']) ||
-            !(isset($credentials['algorithm']) && $credentials['algorithm'])
+            empty($credentials['key']) ||
+            empty($credentials['algorithm'])
         ) {
             throw new ServerException('Invalid credentials');
         }
@@ -240,7 +238,7 @@ class Server implements ServerInterface
          */
 
         if (!$artifacts['hash'] &&
-            ((isset($options['payload']) && $options['payload']) || $options['payload'] === '')
+            (!empty($options['payload']) || $options['payload'] === '')
         ) {
             $artifacts['hash'] = $this->Crypto->calculatePayloadHash(
                 $options['payload'],
@@ -291,7 +289,7 @@ class Server implements ServerInterface
         }
 
         // Check if bewit is empty
-        if (!(isset($resource[3][0]) && $resource[3][0])) {
+        if (empty($resource[3][0])) {
             throw new UnauthorizedException('Empty bewit');
         }
 
@@ -303,7 +301,7 @@ class Server implements ServerInterface
         }
 
         // Check if there is some other authentication (authorization)
-        if (isset($request['authorization']) && $request['authorization']) {
+        if (!empty($request['authorization'])) {
             throw new BadRequestException('Multiple authentications');
         }
 
@@ -370,9 +368,7 @@ class Server implements ServerInterface
             'attributes' => $bewit
         ];
 
-        if (!(isset($credentials['key']) && $credentials['key']) ||
-            !(isset($credentials['algorithm']) && $credentials['algorithm'])
-        ) {
+        if (empty($credentials['key']) || empty($credentials['algorithm'])) {
             throw new ServerException('Invalid credentials');
         }
 
@@ -415,13 +411,14 @@ class Server implements ServerInterface
          * Default options
          */
 
-        $options['timestampSkewSec'] = (isset($options['timestampSkewSec']) && $options['timestampSkewSec'])
-            ? $options['timestampSkewSec']
-            : 60;
+        $options['timestampSkewSec'] = empty($options['timestampSkewSec'])
+            ? 60
+            : $options['timestampSkewSec'];
 
         /*
          * Get application time before any other processing
          */
+
         $options['localtimeOffsetMsec'] = isset($options['localtimeOffsetMsec'])
             ? $options['localtimeOffsetMsec']
             : 0;
@@ -431,11 +428,11 @@ class Server implements ServerInterface
          * Validate authorization
          */
 
-        if (!(isset($authorization['id']) && $authorization['id']) ||
-            !(isset($authorization['ts']) && $authorization['ts']) ||
-            !(isset($authorization['nonce']) && $authorization['nonce']) ||
-            !(isset($authorization['hash']) && $authorization['hash']) ||
-            !(isset($authorization['mac']) && $authorization['mac'])
+        if (empty($authorization['id']) ||
+            empty($authorization['ts']) ||
+            empty($authorization['nonce']) ||
+            empty($authorization['hash']) ||
+            empty($authorization['mac'])
         ) {
             throw new BadRequestException('Invalid authorization');
         }
@@ -458,9 +455,7 @@ class Server implements ServerInterface
 
         $result = ['credentials' => $credentials];
 
-        if (!(isset($credentials['key']) && $credentials['key']) ||
-            !(isset($credentials['algorithm']) && $credentials['algorithm'])
-        ) {
+        if (empty($credentials['key']) || empty($credentials['algorithm'])) {
             throw new ServerException('Invalid credentials');
         }
 
@@ -504,7 +499,7 @@ class Server implements ServerInterface
          * Check nonce
          */
 
-        if (isset($options['nonceFunc']) && $options['nonceFunc']) {
+        if (!empty($options['nonceFunc'])) {
             try {
                 $options['nonceFunc']($credentials['key'], $authorization['nonce'], $authorization['ts']);
             } catch (\Exception $e) {
