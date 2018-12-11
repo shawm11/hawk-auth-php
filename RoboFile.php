@@ -160,7 +160,7 @@ class RoboFile extends \Robo\Tasks
         $execution = $this->taskExecStack()
                           ->stopOnFail()
                           ->exec(
-                              '"./vendor/bin/robo" git:stash "release-major-'
+                              '"./vendor/bin/robo" git:stash "release-minor-'
                               . (new \DateTime)->format(\DateTime::ISO8601) . '"'
                           )
                           ->exec('"./vendor/bin/robo" lint')
@@ -187,7 +187,7 @@ class RoboFile extends \Robo\Tasks
         $execution = $this->taskExecStack()
                           ->stopOnFail()
                           ->exec(
-                              '"./vendor/bin/robo" git:stash "release-major-'
+                              '"./vendor/bin/robo" git:stash "release-patch-'
                               . (new \DateTime)->format(\DateTime::ISO8601) . '"'
                           )
                           ->exec('"./vendor/bin/robo" lint')
