@@ -3,7 +3,7 @@
     "description": "PHP implementation of the Hawk HTTP authentication scheme",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "require": {
         "php": ">=5.6.0"
     },
