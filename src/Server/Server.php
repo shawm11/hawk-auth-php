@@ -80,7 +80,7 @@ class Server implements ServerInterface
             'hash' => empty($attributes['hash']) ? null : $attributes['hash'],
             'ext' => empty($attributes['ext']) ? null : $attributes['ext'],
             'app' => empty($attributes['app']) ? null : $attributes['app'],
-            'dlg' => empty($attributes['dlg']) ? null : $attributes['dlgdlg'],
+            'dlg' => empty($attributes['dlg']) ? null : $attributes['dlg'],
             'mac' => empty($attributes['mac']) ? null : $attributes['mac'],
             'id' => empty($attributes['id']) ? null : $attributes['id']
         ];
