@@ -3,7 +3,7 @@ Hawk Authentication PHP
 
 ![Version Number](https://img.shields.io/packagist/v/shawm11/hawk-auth.svg)
 ![PHP Version](https://img.shields.io/packagist/php-v/shawm11/hawk-auth.svg)
-[![License](https://img.shields.io/github/license/shawm11/hawk-auth-php.svg)](https://github.com/shawm11/hawk-auth-php/blob/master/LICENSE.md)
+[![License](https://img.shields.io/github/license/shawm11/hawk-auth-php.svg)](LICENSE.md)
 
 A PHP implementation of the 7.x version of the
 [**Hawk**](https://github.com/hueniverse/hawk) HTTP authentication scheme.
