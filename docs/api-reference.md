@@ -10,10 +10,10 @@ Table of Contents
     -   [`authenticate($request, $credentialsFunc, $options)`](#authenticaterequest-credentialsfunc-options)
         - [`authenticate` (`Server` Class) Parameters](#authenticate-server-class-parameters)
 
-    -   [`authenticatePayload($payload, $credentials, $artifacts, $contentType)`](#authenticatepayloadpayload-credentials-artifacts-contenttype`)
+    -   [`authenticatePayload($payload, $credentials, $artifacts, $contentType)`](#authenticatepayloadpayload-credentials-artifacts-contenttype)
         - [`authenticatePayload` Parameters](#authenticatepayload-parameters)
 
-    -   [`authenticatePayloadHash($calculatedHash, $artifacts)`](#authenticatepayloadhashcalculatedhash-artifacts`)
+    -   [`authenticatePayloadHash($calculatedHash, $artifacts)`](#authenticatepayloadhashcalculatedhash-artifacts)
         - [`authenticatePayloadHash` Parameters](#authenticatepayloadhash-parameters)
 
     -   [`header($credentials, $artifacts, $options)`](#headercredentials-artifacts-options)
@@ -130,8 +130,8 @@ Returns an array that contains the following if there were no errors:
     - _string_ `nonce` — Nonce used to create the `mac`
     - _string_ `hash` — Payload hash. Only used for payload validation.
     - _string_ `ext` — Extra application-specific data
-    - _string_ `app` — Application ID. Only used with [Oz](https://github.com/hueniverse/oz).
-    - _string_ `dlg` — 'delegated-by' attribute. Only used with [Oz](https://github.com/hueniverse/oz).
+    - _string_ `app` — Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+    - _string_ `dlg` — 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
     - _string_ `mac` — HMAC digest of the other items in this array
     - _string_ `id` — Client's unique Hawk ID
 
@@ -224,8 +224,7 @@ calculate the hash. Only used when payload cannot be provided during
 ### `authenticatePayloadHash($calculatedHash, $artifacts)`
 
 Authenticate payload hash using the given pre-calculated hash. Only used when
-payload cannot be provided during
-[`authenticate()`](#authenticaterequest-credentialsFunc-options).
+payload cannot be provided when using [`authenticate()`](#authenticaterequest-credentialsFunc-options).
 
 #### `authenticatePayloadHash` Parameters
 
@@ -262,8 +261,8 @@ server's response.
     - _string_ `resource` — URL of the request relative to the host
     - _string_ `ts` — Timestamp (as milliseconds since January 1, 1970)
     - _string_ `nonce` — Nonce used to create the `mac`
-    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/hueniverse/oz).
-    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/hueniverse/oz).
+    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
     - _string_ `id` — Client's unique Hawk ID
 
 1.  _array_ `$options` — (Optional) Hawk attributes that will be integrated
@@ -483,8 +482,8 @@ Returns an array that contains the following:
     - _string_ `nonce` — Nonce used to create the `mac`
     - _string_ `hash` — Payload hash. Only used for payload validation.
     - _string_ `ext` — Extra application-specific data
-    - _string_ `app` — Application ID. Only used with [Oz](https://github.com/hueniverse/oz).
-    - _string_ `dlg` — 'delegated-by' attribute. Only used with [Oz](https://github.com/hueniverse/oz).
+    - _string_ `app` — Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+    - _string_ `dlg` — 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
 
 #### `header` (`Client` Class) Parameters
 
@@ -529,9 +528,9 @@ Returns an array that contains the following:
 
     -   _string_ `ext` — (Optional) Extra application-specific data
 
-    -   _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/hueniverse/oz).
+    -   _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
 
-    -   _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/hueniverse/oz).
+    -   _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
 
 ### `authenticate($responseHeaders, $credentials, $artifacts, $options)`
 
@@ -572,8 +571,8 @@ Validate the server's response.
     - _string_ `nonce` — Nonce used to create the `mac`
     - _string_ `hash` — Payload hash. Only used for payload validation.
     - _string_ `ext` — Extra application-specific data
-    - _string_ `app` — Application ID. Only used with [Oz](https://github.com/hueniverse/oz).
-    - _string_ `dlg` — 'delegated-by' attribute. Only used with [Oz](https://github.com/hueniverse/oz).
+    - _string_ `app` — Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+    - _string_ `dlg` — 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
 
 1.  _array_ `$options` — (Optional) Includes the following:
 
@@ -708,8 +707,8 @@ Returns the HMAC digest as a string.
     - _string_ `nonce` — (Optional) Nonce used to create the `mac`
     - _string_ `hash` — (Optional) Payload hash. For payload validation only.
     - _string_ `ext` — (Optional) Extra application-specific data
-    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/hueniverse/oz).
-    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/hueniverse/oz).
+    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
 
 ### `generateNormalizedString($type, $options)`
 
@@ -733,8 +732,8 @@ Returns the normalized Hawk string.
     - _string_ `nonce` — (Optional) Nonce used to create the `mac`
     - _string_ `hash` — (Optional) Payload hash. For payload validation only.
     - _string_ `ext` — (Optional) Extra application-specific data
-    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/hueniverse/oz).
-    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/hueniverse/oz).
+    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
 
 ### `calculatePayloadHash($payload, $algorithm, $contentType)`
 
