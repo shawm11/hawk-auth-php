@@ -19,7 +19,7 @@ Table of Contents
     - [Server](#server)
     - [Client](#client)
 
--   [API](#api)
+-   [API References](#api-references)
 
 -   [Security Considerations](#security-considerations)
 
@@ -212,10 +212,20 @@ function responseCallback($hawkClient, $credentials, $artifacts) {
 }
 ```
 
-API
----
+API References
+--------------
 
-See the [API Reference](docs/api-reference.md) for details about the API.
+-   [Server API](docs/api-reference/server-api.md) — API reference for the
+    classes in the `Shawm11\Hawk\Server` namespace
+
+-   [Client API](docs/api-reference/server-api.md) — API reference for the
+    classes in the `Shawm11\Hawk\Client` namespace
+
+-   [Utils API](docs/api-reference/utils-api.md) — API reference for the classes
+    in the `Shawm11\Hawk\Utils` namespace
+
+-   [Crypto API](docs/api-reference/crypto-api.md) — API reference for the
+    classes in the `Shawm11\Hawk\Crypto` namespace
 
 Security Considerations
 -----------------------
