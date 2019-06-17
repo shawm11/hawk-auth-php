@@ -4,25 +4,21 @@ Crypto API Reference
 Table of Contents
 -----------------
 
--   [Namespace](#namespace)
+<!--lint disable list-item-spacing-->
 
--   [`Crypto` Class](#crypto-class)
-    -   [`$algorithms` Property](#algorithms-property)
-
-    -   [`calculateMac($type, $credentials, $options)`](#calculatemactype-credentials-options)
-        - [`calculateMac` Parameters](#calculatemac-parameters)
-
-    -   [`generateNormalizedString($type, $options)`](#generatenormalizedstringtype-options)
-        - [`generateNormalizedString` Parameters](#generatenormalizedstring-parameters)
-
-    -   [`calculatePayloadHash($payload, $algorithm, $contentType)`](#calculatepayloadhashpayload-algorithm-contenttype)
-        - [`calculatePayloadHash` Parameters](#calculatepayloadhash-parameters)
-
-    -   [`calculateTsMac($ts, $credentials)`](#calculatetsmacts-credentials)
-        - [`calculateTsMac` Parameters](#calculatetsmac-parameters)
-
-    -   [`timestampMessage($credentials, $localtimeOffsetMsec)`](#timestampmessagecredentials-localtimeoffsetmsec)
-        - [`timestampMessage` Parameters](#timestampmessage-parameters)
+- [Namespace](#namespace)
+- [`Crypto` Class](#crypto-class)
+  - [`$algorithms` Property](#algorithms-property)
+  - [`calculateMac($type, $credentials, $options)`](#calculatemactype-credentials-options)
+    - [`calculateMac` Parameters](#calculatemac-parameters)
+  - [`generateNormalizedString($type, $options)`](#generatenormalizedstringtype-options)
+    - [`generateNormalizedString` Parameters](#generatenormalizedstring-parameters)
+  - [`calculatePayloadHash($payload, $algorithm, $contentType)`](#calculatepayloadhashpayload-algorithm-contenttype)
+    - [`calculatePayloadHash` Parameters](#calculatepayloadhash-parameters)
+  - [`calculateTsMac($ts, $credentials)`](#calculatetsmacts-credentials)
+    - [`calculateTsMac` Parameters](#calculatetsmac-parameters)
+  - [`timestampMessage($credentials, $localtimeOffsetMsec)`](#timestampmessagecredentials-localtimeoffsetmsec)
+    - [`timestampMessage` Parameters](#timestampmessage-parameters)
 
 Namespace
 ---------
@@ -47,30 +43,26 @@ Returns the HMAC digest as a string.
 
 #### `calculateMac` Parameters
 
-1.  _string_ `$type` — (Optional) Indicates the purpose of the MAC.'
-    'Examples: `header`, `response`, `bewit`, `message`
+1. _string_ `$type` — (Optional) Indicates the purpose of the MAC.'
+   'Examples: `header`, `response`, `bewit`, `message`
+1. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
+   the following:
+   - _string_ `key` — (Required) Secret key for the client
+   - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
+     algorithm in the [`$algorithms` array property](#algorithms-property).
 
-1.  _array_ `$credentials` — (Required) Client's Hawk credentials, which include
-    the following:
-
-    -   _string_ `key` — (Required) Secret key for the client
-
-    -   _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be
-        an algorithm in the [`$algorithms` array property](#algorithms-property).
-
-1.  _array_ `$options` — (Required) Components used to construct used to create
-    the HMAC digest. It contains the following:
-
-    - _string_ `method` — (Optional) Request method
-    - _string_ `host` — (Optional) Request host
-    - _string_ `port` — (Optional) Request port
-    - _string_ `resource` — (Optional) URL of the request relative to the host
-    - _string_ `ts` — (Optional) Timestamp (milliseconds since Jan. 1, 1970)
-    - _string_ `nonce` — (Optional) Nonce used to create the `mac`
-    - _string_ `hash` — (Optional) Payload hash. For payload validation only.
-    - _string_ `ext` — (Optional) Extra application-specific data
-    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
-    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+1. _array_ `$options` — (Required) Components used to construct used to create
+   the HMAC digest. It contains the following:
+   - _string_ `method` — (Optional) Request method
+   - _string_ `host` — (Optional) Request host
+   - _string_ `port` — (Optional) Request port
+   - _string_ `resource` — (Optional) URL of the request relative to the host
+   - _string_ `ts` — (Optional) Timestamp (milliseconds since Jan. 1, 1970)
+   - _string_ `nonce` — (Optional) Nonce used to create the `mac`
+   - _string_ `hash` — (Optional) Payload hash. For payload validation only.
+   - _string_ `ext` — (Optional) Extra application-specific data
+   - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+   - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
 
 ### `generateNormalizedString($type, $options)`
 
@@ -80,22 +72,20 @@ Returns the normalized Hawk string.
 
 #### `generateNormalizedString` Parameters
 
-1.  _string_ `$type` — (Optional) Indicates the purpose of the MAC.
-    Examples: `header`, `response`, `bewit`, `message`
-
-1.  _array_ `$options` — (Required) Components used to construct used to create
-    the HMAC digest. It contains the following:
-
-    - _string_ `method` — (Optional) Request method
-    - _string_ `host` — (Optional) Request host
-    - _string_ `port` — (Optional) Request port
-    - _string_ `resource` — (Optional) URL of the request relative to the host
-    - _string_ `ts` — (Optional) Timestamp (milliseconds since Jan. 1, 1970)
-    - _string_ `nonce` — (Optional) Nonce used to create the `mac`
-    - _string_ `hash` — (Optional) Payload hash. For payload validation only.
-    - _string_ `ext` — (Optional) Extra application-specific data
-    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
-    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+1. _string_ `$type` — (Optional) Indicates the purpose of the MAC.
+   Examples: `header`, `response`, `bewit`, `message`
+1. _array_ `$options` — (Required) Components used to construct used to create
+   the HMAC digest. It contains the following:
+   - _string_ `method` — (Optional) Request method
+   - _string_ `host` — (Optional) Request host
+   - _string_ `port` — (Optional) Request port
+   - _string_ `resource` — (Optional) URL of the request relative to the host
+   - _string_ `ts` — (Optional) Timestamp (milliseconds since Jan. 1, 1970)
+   - _string_ `nonce` — (Optional) Nonce used to create the `mac`
+   - _string_ `hash` — (Optional) Payload hash. For payload validation only.
+   - _string_ `ext` — (Optional) Extra application-specific data
+   - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
+   - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
 
 ### `calculatePayloadHash($payload, $algorithm, $contentType)`
 
@@ -105,13 +95,11 @@ Returns the hash as a string.
 
 #### `calculatePayloadHash` Parameters
 
-1.  _string_ `$payload` — (Required) UTF-8-encoded request body (or "payload")
-
-1.  _string_ `$algorithm` — (Required) Algorithm to be used for HMAC. Must be an
-    algorithm in the [`$algorithms` array property](#algorithms-property).
-
-1.  _string_ `$contentType` — (Optional) Value of the `Content-Type` header in
-    the request
+1. _string_ `$payload` — (Required) UTF-8-encoded request body (or "payload")
+1. _string_ `$algorithm` — (Required) Algorithm to be used for HMAC. Must be an
+   algorithm in the [`$algorithms` array property](#algorithms-property).
+1. _string_ `$contentType` — (Optional) Value of the `Content-Type` header in
+   the request
 
 ### `calculateTsMac($ts, $credentials)`
 
@@ -121,16 +109,13 @@ Returns the HMAC digest as a string.
 
 #### `calculateTsMac` Parameters
 
-1.  _string_ `$ts` — (Required) Timestamp (as milliseconds since January 1,
-    1970) for which to calculate the MAC
-
-1.  _array_ `$credentials` — (Required) Client's Hawk credentials, which include
-    the following:
-
-    -   _string_ `key` — (Required) Secret key for the client
-
-    -   _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be
-        an algorithm in the [`$algorithms` array property](#algorithms-property).
+1. _string_ `$ts` — (Required) Timestamp (as milliseconds since January 1, 1970)
+   for which to calculate the MAC
+1. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
+   the following:
+   - _string_ `key` — (Required) Secret key for the client
+   - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
+     algorithm in the [`$algorithms` array property](#algorithms-property).
 
 ### `timestampMessage($credentials, $localtimeOffsetMsec)`
 
@@ -143,13 +128,12 @@ Return an array that contains the following:
 
 #### `timestampMessage` Parameters
 
-1.  _array_ `$credentials` — (Required) Client's Hawk credentials, which include
-    the following:
+1. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
+   the following:
+   - _string_ `key` — (Required) Secret key for the client
+   - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
+     algorithm in the [`$algorithms` array property](#algorithms-property).
+1. _float_ `$localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
+   milliseconds) of the local time
 
-    -   _string_ `key` — (Required) Secret key for the client
-
-    -   _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be
-        an algorithm in the [`$algorithms` array property](#algorithms-property).
-
-1.  _float_ `$localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
-    milliseconds) of the local time
+<!--lint enable list-item-spacing-->

@@ -4,31 +4,25 @@ Utils API Reference
 Table of Contents
 -----------------
 
--   [Namespace](#namespace)
+<!--lint disable list-item-spacing-->
 
--   [`Utils` Class](#utils-class)
-    -   [`$limits` Property](#limits-property)
-
-    -   [`parseContentType($header)`](#parsecontenttypeheader)
-        - [`parseContentType` Parameters](#parsecontenttype-parameters)
-
-    -   [`now($localtimeOffsetMsec)`](#nowlocaltimeoffsetmsec)
-        - [`now` Parameters](#now-parameters)
-
-    -   [`nowSecs($localtimeOffsetMsec)`](#nowsecslocaltimeoffsetmsec)
-        - [`nowSecs` Parameters](#nowsecs-parameters)
-
-    -   [`parseAuthorizationHeader($header, $keys)`](#parseauthorizationheaderheader-keys)
-        - [`parseAuthorizationHeader` Parameters](#parseauthorizationheader-parameters)
-
-    -   [`escapeHeaderAttribute($attribute)`](#escapeheaderattributeattribute)
-        - [`escapeHeaderAttribute` Parameters](#escapeheaderattribute-parameters)
-
-    -   [`base64urlEncode($data)`](#base64urlencodedata)
-        - [`base64urlEncode` Parameters](#base64urlencode-parameters)
-
-    -   [`base64urlDecode($data)`](#base64urldecodedata)
-        - [`base64urlDecode` Parameters](#base64urldecode-parameters)
+- [Namespace](#namespace)
+- [`Utils` Class](#utils-class)
+  - [`$limits` Property](#limits-property)
+  - [`parseContentType($header)`](#parsecontenttypeheader)
+    - [`parseContentType` Parameters](#parsecontenttype-parameters)
+  - [`now($localtimeOffsetMsec)`](#nowlocaltimeoffsetmsec)
+    - [`now` Parameters](#now-parameters)
+  - [`nowSecs($localtimeOffsetMsec)`](#nowsecslocaltimeoffsetmsec)
+    - [`nowSecs` Parameters](#nowsecs-parameters)
+  - [`parseAuthorizationHeader($header, $keys)`](#parseauthorizationheaderheader-keys)
+    - [`parseAuthorizationHeader` Parameters](#parseauthorizationheader-parameters)
+  - [`escapeHeaderAttribute($attribute)`](#escapeheaderattributeattribute)
+    - [`escapeHeaderAttribute` Parameters](#escapeheaderattribute-parameters)
+  - [`base64urlEncode($data)`](#base64urlencodedata)
+    - [`base64urlEncode` Parameters](#base64urlencode-parameters)
+  - [`base64urlDecode($data)`](#base64urldecodedata)
+    - [`base64urlDecode` Parameters](#base64urldecode-parameters)
 
 Namespace
 ---------
@@ -87,11 +81,10 @@ Returns an array that contains the header attributes and their values.
 
 #### `parseAuthorizationHeader` Parameters
 
-1.  _string_ `$header` — (Required) Value of the `Authorization` HTTP header
-
-1.  _array_ `$keys` — (Optional, default: `id`, `ts`, `nonce`, `hash`, `ext`,
-    `mac`, `app`, `dlg`) Names of the attributes the Hawk `Authorization` HTTP
-    header is supposed to contain
+1. _string_ `$header` — (Required) Value of the `Authorization` HTTP header
+1. _array_ `$keys` — (Optional, default: `id`, `ts`, `nonce`, `hash`, `ext`,
+   `mac`, `app`, `dlg`) Names of the attributes the Hawk `Authorization` HTTP
+   header is supposed to contain
 
 ### `escapeHeaderAttribute($attribute)`
 
@@ -121,3 +114,5 @@ Decode the given URL-safe Base64 string. Follows RFC 4648.
 #### `base64urlDecode` Parameters
 
 1. _string_ `$data` — (Required) URL-safe Base64 string to decode
+
+<!--lint enable list-item-spacing-->
