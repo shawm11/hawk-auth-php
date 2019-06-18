@@ -4,29 +4,26 @@ Contributing Guidelines
 Table of Contents
 -----------------
 
--   [Testing](#testing)
+<!--lint disable list-item-spacing-->
 
--   [Coding Style](#coding-style)
-    - [PHPDoc](#phpdoc)
+- [Testing](#testing)
+- [Coding Style](#coding-style)
+  - [PHPDoc](#phpdoc)
+- [Commit Message Guidelines](#commit-message-guidelines)
+  - [Message Header](#message-header)
+    - [Subject](#subject)
+    - [Type](#type)
+    - [Scope](#scope)
+    - [Revert](#revert)
+  - [Message Body](#message-body)
+  - [Message Footer](#message-footer)
+    - [Referencing Issues](#referencing-issues)
+  - [Example Commit Messages](#example-commit-messages)
+- [Development Tasks CLI Commands](#development-tasks-cli-commands)
+- [Git Hooks](#git-hooks)
+  - [Installing Hooks](#installing-hooks)
 
--   [Commit Message Guidelines](#commit-message-guidelines)
-    -   [Message Header](#message-header)
-        - [Subject](#subject)
-        - [Type](#type)
-        - [Scope](#scope)
-        - [Revert](#revert)
-
-    -   [Message Body](#message-body)
-
-    -   [Message Footer](#message-footer)
-        - [Referencing Issues](#referencing-issues)
-
-    -   [Example Commit Messages](#example-commit-messages)
-
--   [Development Tasks CLI Commands](#development-tasks-cli-commands)
-
--   [Git Hooks](#git-hooks)
-    - [Installing Hooks](#installing-hooks)
+<!--lint enable list-item-spacing-->
 
 Testing
 -------
@@ -106,30 +103,24 @@ The `<subject>` contains succinct description of the change:
 #### Type
 The `<type>` must be one of the following:
 
--   **build**: Changes that affect the build system or external dependencies
-    (example scopes: composer, gulp, broccoli, npm)
+<!--lint disable list-item-spacing-->
 
--   **ci**: Changes to our CI configuration files and scripts (example scopes:
-    Travis, Circle, BrowserStack, SauceLabs)
+- **build**: Changes that affect the build system or external dependencies
+  (example scopes: composer, gulp, broccoli, npm)
+- **ci**: Changes to our CI configuration files and scripts (example scopes:
+  Travis, Circle, BrowserStack, SauceLabs)
+- **docs**: Documentation only changes
+- **feat**: A new feature
+- **fix**: A bug fix
+- **perf**: A code change that improves performance
+- **security**: A code change that improves security
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **style**: Changes that do not affect the meaning of the code (white-space,
+  formatting, missing semi-colons, etc.)
+- **test**: Adding missing tests or correcting existing tests
+- **chore**: Updating configuration files etc.; no production code change
 
--   **docs**: Documentation only changes
-
--   **feat**: A new feature
-
--   **fix**: A bug fix
-
--   **perf**: A code change that improves performance
-
--   **security**: A code change that improves security
-
--   **refactor**: A code change that neither fixes a bug nor adds a feature
-
--   **style**: Changes that do not affect the meaning of the code (white-space,
-    formatting, missing semi-colons, etc.)
-
--   **test**: Adding missing tests or correcting existing tests
-
--   **chore**: Updating configuration files etc.; no production code change
+<!--lint enable list-item-spacing-->
 
 #### Scope
 
