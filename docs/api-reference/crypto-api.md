@@ -95,7 +95,7 @@ Returns the hash as a string.
 
 #### `calculatePayloadHash` Parameters
 
-1. _string_ `$payload` — (Required) UTF-8-encoded request body (or "payload")
+1. _string_ `$payload` — (Required) Request body (or "payload")
 1. _string_ `$algorithm` — (Required) Algorithm to be used for HMAC. Must be an
    algorithm in the [`$algorithms` array property](#algorithms-property).
 1. _string_ `$contentType` — (Optional) Value of the `Content-Type` header in

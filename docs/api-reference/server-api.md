@@ -101,8 +101,8 @@ Returns an array that contains the following if there were no errors:
    - _float_ `localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
      milliseconds) of the server's local time compared to the client's local
      time
-   - _string_ `payload` — (Optional) UTF-8-encoded request body (or "payload").
-     Only used for payload validation.
+   - _string_ `payload` — (Optional) Request body (or "payload"). Only used for
+     payload validation.
    - _callable_ `nonceFunc` — (Optional) Function for checking the generated
      nonce (**n**umber used **once**) that is used to make the MAC unique even
      if given the same data. It must throw an error if the nonce check fails.
@@ -115,7 +115,7 @@ calculate the hash. Only used when payload cannot be provided during
 
 #### `authenticatePayload` Parameters
 
-1. _string_ `$payload` — (Required) UTF-8-encoded request body (or "payload")
+1. _string_ `$payload` — (Required) Request body (or "payload")
 1. _array_ `$credentials` — (Required) Set of credentials that contains the
    following:
    - _string_ `key` — (Required) Secret key for the client
@@ -171,7 +171,7 @@ server's response.
    - _string_ `contentType` — (Optional) Payload content type. It is usually the
      value of the `Content-Type` header in the request. Only used for payload
      validation.
-   - _string_ `payload` — (Optional) UTF-8-encoded request body (or "payload").
+   - _string_ `payload` — (Optional) Request body (or "payload").
      Only used for payload validation.
    - _string_ `ext` — (Optional) Extra application-specific data
 
