@@ -5,29 +5,27 @@ Hawk Authentication PHP
 ![PHP Version](https://img.shields.io/packagist/php-v/shawm11/hawk-auth.svg)
 [![License](https://img.shields.io/github/license/shawm11/hawk-auth-php.svg)](LICENSE.md)
 
-A PHP implementation of the 7.x version of the
-[**Hawk**](https://github.com/hueniverse/hawk) HTTP authentication scheme.
+A PHP implementation of the 7.x version of the [**Hawk**](https://github.com/hapijs/hawk)
+HTTP authentication scheme.
 
 Table of Contents
 -----------------
 
--   [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
+<!--lint disable list-item-spacing-->
 
--   [Usage Examples](#usage-examples)
-    - [Server](#server)
-    - [Client](#client)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage Examples](#usage-examples)
+  - [Server](#server)
+  - [Client](#client)
+- [API References](#api-references)
+- [Security Considerations](#security-considerations)
+- [Contributing/Development](#contributingdevelopment)
+- [Versioning](#versioning)
+- [License](#license)
 
--   [API References](#api-references)
-
--   [Security Considerations](#security-considerations)
-
--   [Contributing/Development](#contributingdevelopment)
-
--   [Versioning](#versioning)
-
--   [License](#license)
+<!--lint enable list-item-spacing-->
 
 Getting Started
 ---------------
@@ -51,10 +49,10 @@ composer require shawm11/hawk-auth
 Usage Examples
 --------------
 
-The examples in this section are not functional, but should be enough to show
-you how to use this package.
+The examples in this section do not work without modification. However, these
+examples should be enough to demonstrate how to use this package.
 
-### Server
+### Server Example
 
 Because PHP is a language most commonly used for server logic, the "Server"
 usage is more common than the "Client" usage.
@@ -82,8 +80,7 @@ function handleRequest() {
 	];
     // Function for retrieving credentials
     $credentialsFunc = function ($id) {
-        // Pretend to retrieve the credentials (maybe from database) using the
-        // given ID ($id)
+        // Pretend to retrieve the credentials (maybe from database) using the given ID ($id)
         $credentials = [
             'id' => '123456',
             'key' => 'werxhqb98rpaxn39848xrunpaw3489ruxnpa98w4rxn',
@@ -104,8 +101,8 @@ function handleRequest() {
         return;
     } catch (HawkUnauthorizedException $e) {
         $httpStatusCode = $e->getCode();
-        // A fictional function that sets the header
-    	setHeaderSomehow('WWWW-Authenticate', $e->getWwwAuthenticateHeader());
+        // Run a fictional function that sets the header
+    	setHeaderSomehow('WWW-Authenticate', $e->getWwwAuthenticateHeader());
 
         // Send HTTP status 401 (Unauthorized) response...
 
@@ -134,14 +131,14 @@ function sendResponse($hawkServer, $credentials, $artifacts) {
         return;
 	}
 
-	// A fictional function that sets the header
+	// Run a fictional function that sets the header
 	setHeaderSomehow('Server-Authorization', $header);
 
 	// Now do some other stuff to send the response
 }
 ```
 
-### Client
+### Client Example
 
 ```php
 <?php
@@ -173,7 +170,7 @@ function makeRequest($requestData) {
     $header = $result['header']; // a string
     $artifacts = $result['artifacts']; // an array
 
-	// A fake function that sets the header
+	// Run a fictional function that sets the header
 	setHeaderSomehow('Authorization', $header);
 
     // Do some more stuff before sending request
@@ -183,8 +180,7 @@ function makeRequest($requestData) {
 
 	// Wait for response from server...
 
-    // Now do some stuff after receiving response (See the `responseCallback`
-    // function below)
+    // Now do some stuff after receiving response (See the `responseCallback` function below)
     responseCallback($hawkClient, $options['credentials'], $artifacts);
 }
 
@@ -215,22 +211,23 @@ function responseCallback($hawkClient, $credentials, $artifacts) {
 API References
 --------------
 
--   [Server API](docs/api-reference/server-api.md) — API reference for the
-    classes in the `Shawm11\Hawk\Server` namespace
+<!--lint disable list-item-spacing-->
 
--   [Client API](docs/api-reference/server-api.md) — API reference for the
-    classes in the `Shawm11\Hawk\Client` namespace
+- [Server API](docs/api-reference/server-api.md) — API reference for the classes
+  in the `Shawm11\Hawk\Server` namespace
+- [Client API](docs/api-reference/server-api.md) — API reference for the classes
+  in the `Shawm11\Hawk\Client` namespace
+- [Utils API](docs/api-reference/utils-api.md) — API reference for the classes
+  in the `Shawm11\Hawk\Utils` namespace
+- [Crypto API](docs/api-reference/crypto-api.md) — API reference for the classes
+  in the `Shawm11\Hawk\Crypto` namespace
 
--   [Utils API](docs/api-reference/utils-api.md) — API reference for the classes
-    in the `Shawm11\Hawk\Utils` namespace
-
--   [Crypto API](docs/api-reference/crypto-api.md) — API reference for the
-    classes in the `Shawm11\Hawk\Crypto` namespace
+<!--lint enable list-item-spacing-->
 
 Security Considerations
 -----------------------
 
-See the [Security Considerations](https://github.com/hueniverse/hawk#security-considerations)
+See the [Security Considerations](https://github.com/hapijs/hawk#security-considerations)
 section of Hawk's README.
 
 Contributing/Development
@@ -242,11 +239,10 @@ commit message guidelines, and other development information.
 Versioning
 ----------
 
-This project using [SemVer](http://semver.org/) for versioning. For the versions
+This project uses [SemVer](http://semver.org/) for versioning. For the versions
 available, see the tags on this repository.
 
 License
 -------
 
-This project is open-sourced software licensed under the
-[MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
