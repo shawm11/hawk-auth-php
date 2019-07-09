@@ -81,7 +81,11 @@ Returns an array that contains the following:
    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
 
+<!--lint disable maximum-heading-length-->
+
 ### `authenticate($responseHeaders, $credentials, $artifacts, $options)`
+
+<!--lint disable maximum-heading-length-->
 
 Validate the server's response.
 
@@ -95,14 +99,12 @@ Validate the server's response.
      communicating with the correct server. Uses the same syntax as the
      `Authorization` header in the client's request.
    - `Content-Type` — (Optional) Only used for payload validation.
-
 1. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
    the following:
    - _string_ `id` — (Required) Client's unique Hawk ID
    - _string_ `key` — (Required) Secret key for the client
    - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
      algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
-
 1. _array_ `$artifacts` — (Required) Components used to construct the request
    including the `Authorization` HTTP header. It includes the following:
    - _string_ `method` — Request method
@@ -115,7 +117,6 @@ Validate the server's response.
    - _string_ `ext` — Extra application-specific data
    - _string_ `app` — Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
    - _string_ `dlg` — 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
-
 1. _array_ `$options` — (Optional) Includes the following:
    - _string_ `payload` — (Optional) Request body (or "payload"). Only used for
      payload validation.

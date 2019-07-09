@@ -50,7 +50,6 @@ Returns the HMAC digest as a string.
    - _string_ `key` — (Required) Secret key for the client
    - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
      algorithm in the [`$algorithms` array property](#algorithms-property).
-
 1. _array_ `$options` — (Required) Components used to construct used to create
    the HMAC digest. It contains the following:
    - _string_ `method` — (Optional) Request method

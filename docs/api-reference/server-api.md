@@ -41,13 +41,16 @@ All classes and sub-namespaces are within the `Shawm11\Hawk\Server` namespace.
 Contains methods for the server, which receives client requests. The server
 usually is the system that stores and manages user credentials and data.
 
+<!--lint disable maximum-heading-length-->
+
 ### `authenticate($request, $credentialsFunc, $options)`
 
 Validate the given request from a client.
 
 Returns an array that contains the following if there were no errors:
 
-- _array_ `credentials` — Client's Hawk credentials, which include the following:
+- _array_ `credentials` — Client's Hawk credentials, which include the
+  following:
   - _string_ `key` — Secret key for the client
   - _string_ `algorithm` — Algorithm to be used for HMAC. Must be an algorithm
     in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
@@ -163,7 +166,6 @@ server's response.
    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
    - _string_ `id` — Client's unique Hawk ID
-
 1. _array_ `$options` — (Optional) Hawk attributes that will be integrated into
    the `Server-Authorization` header value. It includes the following:
    - _string_ `hash` — (Optional) Payload hash. Only used for payload
@@ -181,7 +183,8 @@ Validate the bewit contained in the given request URL.
 
 Returns and array that includes the following (if the bewit is valid):
 
-- _array_ `credentials` — Client's Hawk credentials, which include the following:
+- _array_ `credentials` — Client's Hawk credentials, which include the
+  following:
   - _string_ `key` — Secret key for the client
   - _string_ `algorithm` — Algorithm to be used for HMAC. Must be an
     algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
@@ -207,23 +210,23 @@ Returns and array that includes the following (if the bewit is valid):
      value of the `Content-Type` header in the request. Only used for payload
      validation.
 1. _callable_ `$credentialsFunc` — (Required) Function for looking up the set
-    of Hawk credentials based on the provided credentials ID. The function must
-    have the following:
-    - Parameter: _string_ `$id` — (Required) Unique ID for the client used to
-      look up the client's set of credentials.
-    - Returns: _array_ — (Required) Set of credentials that contains the
-      following:
-      - _string_ `key` — (Required) Secret key for the client
-      - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be
-        an algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
+   of Hawk credentials based on the provided credentials ID. The function must
+   have the following:
+   - Parameter: _string_ `$id` — (Required) Unique ID for the client used to
+     look up the client's set of credentials.
+   - Returns: _array_ — (Required) Set of credentials that contains the
+     following:
+     - _string_ `key` — (Required) Secret key for the client
+     - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be
+       an algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
 1. _array_ `$options` — (Optional) Includes the following:
-    - _string_ `host` — (Optional) Host of the server (e.g. example.com).
-      Overrides the `host` in the `$request` parameter.
-    - _integer_ `port` — (Optional) Port number. Overrides the `port` in the
-      `$request` parameter.
-    - _float_ `localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
-      milliseconds) of the server's local time compared to the client's local
-      time
+   - _string_ `host` — (Optional) Host of the server (e.g. example.com).
+     Overrides the `host` in the `$request` parameter.
+   - _integer_ `port` — (Optional) Port number. Overrides the `port` in the
+     `$request` parameter.
+   - _float_ `localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
+     milliseconds) of the server's local time compared to the client's local
+     time
 
 ### `authenticateMessage($host, $port, $message, $authorization, $credentialsFunc, $options)`
 
@@ -256,16 +259,16 @@ Returns and array that includes the following (if the message is valid):
      - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be
        an algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
 1. _array_ `$options` — (Optional) Includes the following:
-    - _integer_ `timestampSkewSec` — (Optional, default: `60`) Amount of time
-      (in seconds) the client and server timestamps can differ (usually because
-      of network latency)
-    - _float_ `localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
-      milliseconds) of the server's local time compared to the client's local
-      time
-    - _callable_ `nonceFunc` — (Optional) Function for checking the generated
-      nonce (**n**umber used **once**) that is used to make the MAC unique
-      even if given the same data. It must throw an error if the nonce check
-      fails.
+   - _integer_ `timestampSkewSec` — (Optional, default: `60`) Amount of time
+     (in seconds) the client and server timestamps can differ (usually because
+     of network latency)
+   - _float_ `localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
+     milliseconds) of the server's local time compared to the client's local
+     time
+   - _callable_ `nonceFunc` — (Optional) Function for checking the generated
+     nonce (**n**umber used **once**) that is used to make the MAC unique
+     even if given the same data. It must throw an error if the nonce check
+     fails.
 
 `ServerException` Class
 -----------------------
@@ -311,5 +314,7 @@ Get the associative array of keys and values included in the HTTP
 
 Get the value the HTTP `WWW-Authenticate` header should be set to in the
 server's response.
+
+<!--lint enable maximum-heading-length-->
 
 <!--lint enable list-item-spacing-->
