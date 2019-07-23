@@ -108,8 +108,8 @@ Returns the HMAC digest as a string.
 
 #### `calculateTsMac` Parameters
 
-1. _string_ `$ts` — (Required) Timestamp (as milliseconds since January 1, 1970)
-   for which to calculate the MAC
+1. _string_ or _float_ `$ts` — (Required) Timestamp (as milliseconds since
+   January 1, 1970) for which to calculate the MAC
 1. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
    the following:
    - _string_ `key` — (Required) Secret key for the client

@@ -88,6 +88,9 @@ class Crypto implements CryptoInterface
     {
         $hmac = hash_hmac(
             $credentials['algorithm'],
+            // If $ts is a float with a ".0" at the end, the ".0" is supposed to
+            // be automatically truncated when the float is converted to a
+            // string.
             "hawk.{$this->headerVersion}.ts\n$ts\n",
             $credentials['key'],
             true
@@ -96,7 +99,7 @@ class Crypto implements CryptoInterface
         return base64_encode($hmac);
     }
 
-    public function timestampMessage($credentials, $localtimeOffsetMsec = 0)
+    public function timestampMessage($credentials, $localtimeOffsetMsec = 0.0)
     {
         $now = (new Utils)->nowSecs($localtimeOffsetMsec);
         $tsm = $this->calculateTsMac($now, $credentials);

@@ -7,7 +7,7 @@ class UnauthorizedException extends ServerException
     /**
      * Keys & values the include in the `WWW-Authenticate`
      *
-     * @var string
+     * @var array
      */
     protected $wwwAuthenticateHeaderAttributes = [];
 

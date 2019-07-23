@@ -830,7 +830,7 @@ class ClientTest extends TestCase
                 $this->assertThrowsWithMessage(
                     ClientException::class,
                     'Invalid inputs',
-                    function () use ($credentials) {
+                    function () {
                         (new Client)->message('example.com', 80, 'I am the boodyman', null);
                     }
                 );

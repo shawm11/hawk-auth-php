@@ -50,16 +50,16 @@ class Utils implements UtilsInterface
         return strtolower(trim(explode(';', $header)[0]));
     }
 
-    public function now($localtimeOffsetMsec = 0)
+    public function now($localtimeOffsetMsec = 0.0)
     {
-        $localtimeOffsetMsec = $localtimeOffsetMsec ? $localtimeOffsetMsec : 0;
+        $localtimeOffsetMsec = $localtimeOffsetMsec ? $localtimeOffsetMsec : 0.0;
 
         return floor(microtime(true) * 1000 + $localtimeOffsetMsec);
     }
 
-    public function nowSecs($localtimeOffsetMsec = 0)
+    public function nowSecs($localtimeOffsetMsec = 0.0)
     {
-        $localtimeOffsetMsec = $localtimeOffsetMsec ? $localtimeOffsetMsec : 0;
+        $localtimeOffsetMsec = $localtimeOffsetMsec ? $localtimeOffsetMsec : 0.0;
 
         return floor(microtime(true) + ($localtimeOffsetMsec / 1000));
     }

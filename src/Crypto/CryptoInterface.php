@@ -43,7 +43,7 @@ interface CryptoInterface
      * Calculate the HMAC digest of the given timestamp using the given
      * credentials
      *
-     * @param  string  $ts  The timestamp for which to calculate the MAC
+     * @param  string|float  $ts  The timestamp for which to calculate the MAC
      * @param  array  $credentials  Hawk credentials array, which contains
      *                              `key`, `algorithm`, and `user`
      * @return string  The HMAC digest
@@ -61,5 +61,5 @@ interface CryptoInterface
      * @return array  Contains the timestamp for the current time ("now") and
      *                an HMAC digest of the timestamp
      */
-    public function timestampMessage($credentials, $localtimeOffsetMsec = 0);
+    public function timestampMessage($credentials, $localtimeOffsetMsec = 0.0);
 }

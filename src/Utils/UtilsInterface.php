@@ -20,7 +20,7 @@ interface UtilsInterface
      *                                      negative)
      * @return float The current time in milliseconds
      */
-    public function now($localtimeOffsetMsec = 0);
+    public function now($localtimeOffsetMsec = 0.0);
 
     /**
      * Get the current time with the local time offset in seconds
@@ -30,7 +30,7 @@ interface UtilsInterface
      *                                      negative)
      * @return float  The current time in seconds
      */
-    public function nowSecs($localtimeOffsetMsec = 0);
+    public function nowSecs($localtimeOffsetMsec = 0.0);
 
     /**
      * Parse Hawk HTTP `Authorization` header
@@ -40,8 +40,8 @@ interface UtilsInterface
      *                       header is supposed to contain. The default is 'id',
      *                       'ts', 'nonce', 'hash', 'ext', 'mac', 'app', and
      *                       'dlg'
-     * @throws Shawm11\Hawk\Server\BadRequestException
-     * @throws Shawm11\Hawk\Server\UnauthorizedException
+     * @throws \Shawm11\Hawk\Server\BadRequestException
+     * @throws \Shawm11\Hawk\Server\UnauthorizedException
      * @return array  The attributes of the Hawk Authorization header. Contains
      *                the items listed in `$keys`
      */

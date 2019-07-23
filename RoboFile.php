@@ -42,11 +42,15 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Check PHP files for style errors
+     * Check PHP files for errors (including style errors)
      */
     public function lint()
     {
-        return $this->_exec('"./vendor/bin/phpcs"');
+        return $this->taskExecStack()
+                    ->stopOnFail()
+                    ->exec('"./vendor/bin/phpcs"')
+                    ->exec('"./vendor/bin/phpstan" analyse')
+                    ->run();
     }
 
     /**
