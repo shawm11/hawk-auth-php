@@ -10,7 +10,27 @@ use vierbergenlars\SemVer\version;
  */
 class RoboFile extends \Robo\Tasks
 {
-    private $composerJson;
+    /**
+     * The command executed when the Git pre-commit hook is triggered
+     */
+    public function gitHookPreCommit()
+    {
+        $execution = $this->taskExecStack()
+                          ->stopOnFail()
+                          ->exec('"./vendor/bin/robo" git:stash "pre-commit-'
+                            . (new \DateTime)->format(\DateTime::ISO8601) . '"')
+                          ->exec('"./vendor/bin/robo" lint')
+                          ->exec('"./vendor/bin/robo" test')
+                          ->exec('"./vendor/bin/robo" git:stash-pop')
+                          ->run();
+
+        if (!$execution->wasSuccessful()) {
+            $this->io()->error('ABORTING COMMIT!');
+            $this->_exec('"./vendor/bin/robo" git:stash-pop');
+        }
+
+        return $execution;
+    }
 
     /**
      * Push changes to the master branch of the remote repository
@@ -54,7 +74,7 @@ class RoboFile extends \Robo\Tasks
     }
 
     /**
-     * Bump the version and release to the remote repository master branch
+     * Bump the version and prepare for release
      */
     public function release()
     {
