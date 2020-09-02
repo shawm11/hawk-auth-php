@@ -7,7 +7,9 @@ use Shawm11\Hawk\Utils\Utils;
 
 class Server implements ServerInterface
 {
+    /** @var Crypto */
     protected $Crypto;
+    /** @var Utils */
     protected $Utils;
 
     /**
@@ -24,6 +26,9 @@ class Server implements ServerInterface
         $this->Utils = new Utils;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function authenticate($request, callable $credentialsFunc, $options = [])
     {
         /*
@@ -182,6 +187,9 @@ class Server implements ServerInterface
         return $result;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function authenticatePayload($payload, $credentials, $artifacts, $contentType)
     {
         $calculatedHash = $this->Crypto->calculatePayloadHash($payload, $credentials['algorithm'], $contentType);
@@ -191,6 +199,9 @@ class Server implements ServerInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function authenticatePayloadHash($calculatedHash, $artifacts)
     {
         if (!hash_equals($calculatedHash, $artifacts['hash'])) {
@@ -198,6 +209,9 @@ class Server implements ServerInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function header($credentials, $artifacts, $options = [])
     {
         /*
@@ -255,7 +269,7 @@ class Server implements ServerInterface
 
         $header = "Hawk mac=\"$mac\"" . ($artifacts['hash'] ? ", hash=\"{$artifacts['hash']}\"" : '');
 
-        if ($artifacts['ext'] !== null &&
+        if (!is_null($artifacts['ext']) &&
             $artifacts['ext'] !== '' // Other falsey values allowed
         ) {
             $header .= ", ext=\"{$this->Utils->escapeHeaderAttribute($artifacts['ext'])}\"";
@@ -264,6 +278,9 @@ class Server implements ServerInterface
         return $header;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function authenticateBewit($request, callable $credentialsFunc, $options = [])
     {
         /*
@@ -399,6 +416,9 @@ class Server implements ServerInterface
         return $result;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function authenticateMessage(
         $host,
         $port,

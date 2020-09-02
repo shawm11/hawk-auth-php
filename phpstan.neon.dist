@@ -1,13 +1,10 @@
 parameters:
-    level: 5
-    memory: 100M
+    level: 6
     paths:
         - src
         - tests
+    checkMissingIterableValueType: false
     ignoreErrors:
         -
             message: '#Parameter \#[0-9] \$[a-zA-Z0-9]+ of method Shawm11\\Hawk\\[a-zA-Z\\]+::[a-zA-Z0-9_]+\(\) expects [a-z|]+#'
             path: %currentWorkingDirectory%/tests/*
-        -
-            message: '#Strict comparison using === between string and null will always evaluate to false.#'
-            path: %currentWorkingDirectory%/src/Client/Client.php

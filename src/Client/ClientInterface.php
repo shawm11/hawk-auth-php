@@ -58,7 +58,7 @@ interface ClientInterface
      * @param  string  $host  Host portion of the URI the message will be sent
      *                        to
      * @param  integer  $port  Port of the URI the message will be sent to
-     * @param  string  $message
+     * @param  string|null  $message
      * @param  array  $options  Contains `credentials`, `timestamp`, `nonce`,
      *                          and `localtimeOffsetMsec`
      * @throws ClientException

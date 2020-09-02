@@ -9,6 +9,9 @@ class CryptoTest extends TestCase
 {
     use \Codeception\Specify;
 
+    /**
+     * @return void
+     */
     public function testGenerateNormalizedString()
     {
         $this->describe('Crypto::generateNormalizedString()', function () {

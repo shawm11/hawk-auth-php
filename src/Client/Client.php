@@ -7,7 +7,9 @@ use Shawm11\Hawk\Utils\Utils;
 
 class Client implements ClientInterface
 {
+    /** @var Crypto */
     protected $Crypto;
+    /** @var Utils */
     protected $Utils;
 
     public function __construct()
@@ -16,6 +18,9 @@ class Client implements ClientInterface
         $this->Utils = new Utils;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function header($uri, $method, $options)
     {
         /*
@@ -108,7 +113,7 @@ class Client implements ClientInterface
          * Construct header
          */
         // Other falsey values allowed
-        $hashExt = $artifacts['ext'] && $artifacts['ext'] !== null && $artifacts['ext'] !== '';
+        $hashExt = $artifacts['ext'] && !is_null($artifacts['ext']) && $artifacts['ext'] !== '';
         $header = "Hawk id=\"{$credentials['id']}\", ts=\"{$artifacts['ts']}\", nonce=\"{$artifacts['nonce']}\""
                 . ($artifacts['hash'] ? ", hash=\"{$artifacts['hash']}\"" : '')
                 . ($hashExt ? ", ext=\"{$this->Utils->escapeHeaderAttribute($artifacts['ext'])}\"" : '')
@@ -125,6 +130,9 @@ class Client implements ClientInterface
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function authenticate($responseHeaders, $credentials, $artifacts, $options = [])
     {
         $result = [];
@@ -221,6 +229,9 @@ class Client implements ClientInterface
         return $result;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getBewit($uri, $options)
     {
         /*
@@ -236,7 +247,7 @@ class Client implements ClientInterface
             throw new ClientException('Invalid inputs');
         }
 
-        $ext = (!isset($options['ext']) || $options['ext'] === null) ? '' : $options['ext'];
+        $ext = (!isset($options['ext']) || is_null($options['ext'])) ? '' : $options['ext'];
 
         /*
          * Get application time before any other processing
@@ -298,6 +309,9 @@ class Client implements ClientInterface
         return $this->Utils->base64urlEncode($bewit);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function message($host, $port, $message, $options)
     {
         /*
@@ -306,7 +320,7 @@ class Client implements ClientInterface
 
         if (!$host || gettype($host) !== 'string' ||
             !$port || gettype($port) !== 'integer' ||
-            $message === null || gettype($message) !== 'string' ||
+            is_null($message) || gettype($message) !== 'string' ||
             gettype($options) !== 'array'
         ) {
             throw new ClientException('Invalid inputs');

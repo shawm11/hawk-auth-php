@@ -16,6 +16,9 @@ class ServerTest extends TestCase
     use \Codeception\Specify;
     use \Codeception\AssertThrows;
 
+    /**
+     * @return void
+     */
     public function testAuthenticate()
     {
         $this->describe('Server::authenticate()', function () {
@@ -187,7 +190,7 @@ class ServerTest extends TestCase
                     $ts = $matches[1];
                     $now = (new Utils)->now();
 
-                    expect(abs((intval($ts, 10) * 1000) - $now))->lessOrEquals(1000);
+                    expect(abs((intval($ts, 10) * 1000) - $now))->lessThanOrEqual(1000);
 
                     $credentials = $this->credentialsFunc('123456');
                     $attributes = [
@@ -868,6 +871,9 @@ class ServerTest extends TestCase
         });
     }
 
+    /**
+     * @return void
+     */
     public function testHeader()
     {
         $this->describe('Server::header()', function () {
@@ -1139,6 +1145,9 @@ class ServerTest extends TestCase
         });
     }
 
+    /**
+     * @return void
+     */
     public function testAuthenticateBewit()
     {
         $this->describe('Server::authenticateBewit()', function () {
@@ -1435,6 +1444,9 @@ class ServerTest extends TestCase
         });
     }
 
+    /**
+     * @return void
+     */
     public function testAuthenticateMessage()
     {
         $this->describe('Server::authenticateMessage()', function () {
@@ -1832,6 +1844,9 @@ class ServerTest extends TestCase
         });
     }
 
+    /**
+     * @return void
+     */
     public function testAuthenticatePayloadHash()
     {
         $this->describe('Server::authenticatePayloadHash()', function () {
@@ -1844,6 +1859,12 @@ class ServerTest extends TestCase
         });
     }
 
+    /**
+     * Mock function that returns a set of fake credentials
+     *
+     * @param  string  $id
+     * @return array
+     */
     private function credentialsFunc($id)
     {
         return [

@@ -52,7 +52,7 @@ class UnauthorizedException extends ServerException
         $wwwAuthenticateHeader = 'Hawk';
 
         foreach ($this->wwwAuthenticateHeaderAttributes as $key => $value) {
-            $value = $value === null ? '': $value;
+            $value = is_null($value) ? '': $value;
 
             $wwwAuthenticateHeader .= " $key=\"$value\",";
         }

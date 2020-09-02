@@ -12,6 +12,9 @@ class ClientTest extends TestCase
     use \Codeception\Specify;
     use \Codeception\AssertThrows;
 
+    /**
+     * @return void
+     */
     public function testHeader()
     {
         $this->describe('Client::header()', function () {
@@ -284,6 +287,9 @@ class ClientTest extends TestCase
         });
     }
 
+    /**
+     * @return void
+     */
     public function testAuthenticate()
     {
         $this->describe('Client::authenticate()', function () {
@@ -534,6 +540,9 @@ class ClientTest extends TestCase
         });
     }
 
+    /**
+     * @return void
+     */
     public function testGetBewit()
     {
         $this->describe('Client::getBewit()', function () {
@@ -645,6 +654,9 @@ class ClientTest extends TestCase
         });
     }
 
+    /**
+     * @return void
+     */
     public function testMessage()
     {
         $this->describe('Client::message()', function () {

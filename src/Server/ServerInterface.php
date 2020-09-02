@@ -38,6 +38,7 @@ interface ServerInterface
      * @param  array  $artifacts  Artifacts returned by `authenticate()`
      * @param  string  $contentType  Value of the `Content-Type` HTTP header in
      *                               the request from the client
+     * @return void
      */
     public function authenticatePayload($payload, $credentials, $artifacts, $contentType);
 
@@ -47,6 +48,7 @@ interface ServerInterface
      *
      * @param  string  $calculatedHash
      * @param  array  $artifacts  Artifacts returned by `authenticate()`
+     * @return void
      */
     public function authenticatePayloadHash($calculatedHash, $artifacts);
 

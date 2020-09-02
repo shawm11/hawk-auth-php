@@ -13,6 +13,9 @@ class UtilsTest extends TestCase
     use \Codeception\Specify;
     use \Codeception\AssertThrows;
 
+    /**
+     * @return void
+     */
     public function testParseAuthorizationHeader()
     {
         $this->describe('Utils::parseAuthorizationHeader()', function () {
@@ -89,6 +92,9 @@ class UtilsTest extends TestCase
         });
     }
 
+    /**
+     * @return void
+     */
     public function testEscapeHeaderAttribute()
     {
         $this->describe('Utils::escapeHeaderAttribute()', function () {
