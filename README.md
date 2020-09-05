@@ -5,14 +5,20 @@ Hawk Authentication PHP
 ![PHP Version](https://img.shields.io/packagist/php-v/shawm11/hawk-auth.svg)
 [![License](https://img.shields.io/github/license/shawm11/hawk-auth-php.svg)](LICENSE.md)
 
-A PHP implementation of the 7.x version of the [**Hawk**](https://github.com/hapijs/hawk)
+A PHP implementation of the 8.0.0 version of the [**Hawk**](https://github.com/outmoded/hawk)
 HTTP authentication scheme.
+
+**NOTICE**: Although the original JavaScript version of [Hawk](https://github.com/outmoded/hawk)
+will not be maintained anymore, **this library will continue to be maintained**.
+The original JavaScript version of Hawk was complete and only had periodic
+documentation and library dependency updates.
 
 Table of Contents
 -----------------
 
 <!--lint disable list-item-spacing-->
 
+- [What is Hawk?](#what-is-hawk)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -21,11 +27,36 @@ Table of Contents
   - [Client](#client)
 - [API References](#api-references)
 - [Security Considerations](#security-considerations)
+- [Related Projects](#related-projects)
 - [Contributing/Development](#contributingdevelopment)
 - [Versioning](#versioning)
 - [License](#license)
 
 <!--lint enable list-item-spacing-->
+
+What is Hawk?
+-------------
+
+According to the [Hawk README](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md):
+
+> **Hawk** is an HTTP authentication scheme using a message authentication code
+> (MAC) algorithm to provide partial HTTP request cryptographic verification.
+
+Note that Hawk is not a complete replacement of OAuth. As candidly stated in the
+[_Frequently Asked Questions_ section of the Hawk README] (https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md#does-hawk-have-anything-to-do-with-oauth):
+
+> **Hawk** was originally proposed as the OAuth MAC Token specification.
+> However, the OAuth working group in its consistent incompetence failed to
+> produce a final, usable solution to address one of the most popular use cases
+> of OAuth 1.0 - using it to authenticate simple client-server transactions
+> (i.e. two-legged). As you can guess, the OAuth working group is still hard at
+> work to produce more garbage.
+>
+> **Hawk** provides a simple HTTP authentication scheme for making client-server
+> requests. It does not address the OAuth use case of delegating access to a
+> third party. If you are looking for an OAuth alternative, check out [Oz] (https://github.com/shawm11/oz-auth-php.
+
+More more information about Hawk, check out its [README](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md)
 
 Getting Started
 ---------------
@@ -227,8 +258,20 @@ API References
 Security Considerations
 -----------------------
 
-See the [Security Considerations](https://github.com/hapijs/hawk#security-considerations)
-section of Hawk's README.
+See the [Security Considerations](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md#security-considerations)
+section of [Hawk's README](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md).
+
+Related Projects
+----------------
+
+- [Oz PHP Implementation](https://github.com/shawm11/oz-auth-php) — PHP
+  implementation of Oz, a web authorization protocol that is an alternative to
+  OAuth 1.0a and OAuth 2.0. Oz utilizes both Hawk and iron.
+
+- [Iron PHP Implementation](https://github.com/shawm11/iron-crypto-php) — PHP
+  implementation of _iron_ (spelled with all lowercase), a cryptographic utility
+  for sealing a JSON object into an encapulated token. _iron_ can be considered
+  as an alternative to JSON Web Tokens (JWT).
 
 Contributing/Development
 ------------------------
