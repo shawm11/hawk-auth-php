@@ -26,14 +26,14 @@ class CryptoTest extends TestCase
 
             $this->it('should return a valid normalized string', function () use ($options) {
                 expect((new Crypto)->generateNormalizedString('header', $options))
-                    ->equals("hawk.1.header\n1357747017\nk3k4j5\nGET\n/resource/something\nexample.com\n8080\n\n\n");
+                    ->toEqual("hawk.1.header\n1357747017\nk3k4j5\nGET\n/resource/something\nexample.com\n8080\n\n\n");
             });
 
             $this->it('should return a valid normalized string (ext)', function () use ($options) {
                 $options['ext'] = 'this is some app data';
 
                 expect((new Crypto)->generateNormalizedString('header', $options))
-                    ->equals(
+                    ->toEqual(
                         "hawk.1.header\n1357747017\nk3k4j5\nGET\n/resource/something\n"
                         . "example.com\n8080\n\nthis is some app data\n"
                     );
@@ -44,7 +44,7 @@ class CryptoTest extends TestCase
                 $options['ext'] = 'this is some app data';
 
                 expect((new Crypto)->generateNormalizedString('header', $options))
-                    ->equals(
+                    ->toEqual(
                         "hawk.1.header\n1357747017\nk3k4j5\nGET\n/resource/something\n"
                         . "example.com\n8080\nU4MKKSmiVxk37JCCrAVIjV/OhB3y+NdwoCr6RShbVkE=\n"
                         . "this is some app data\n"

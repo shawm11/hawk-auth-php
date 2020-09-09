@@ -38,7 +38,7 @@ class ClientTest extends TestCase
                     ]
                 )['header'];
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk id="123456", ts="1353809207", nonce="Ygvqdz"'
                     . ', hash="bsvY3IfUllw6V5rvk4tStEvpBhE=", ext="Bazinga!"'
                     . ', mac="qbf1ZPG/r/e06F4ht+T77LXi5vw="'
@@ -65,7 +65,7 @@ class ClientTest extends TestCase
                     ]
                 )['header'];
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk id="123456", ts="1353809207", nonce="Ygvqdz"'
                     . ', hash="2QfCt3GuY9HQnHWyWD3wX68ZOKbynqlfYmuO2ZBRqtY="'
                     . ', ext="Bazinga!", mac="q1CwFoSHzPZSkbIvl0oYlD+91rBUEvFk763nMjMndj8="'
@@ -91,7 +91,7 @@ class ClientTest extends TestCase
                     ]
                 )['header'];
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk id="123456", ts="1353809207", nonce="Ygvqdz"'
                     . ', hash="2QfCt3GuY9HQnHWyWD3wX68ZOKbynqlfYmuO2ZBRqtY="'
                     . ', mac="HTgtd0jPI6E4izx8e4OHdO36q00xFCU0FolNq3RiCYs="'
@@ -118,7 +118,7 @@ class ClientTest extends TestCase
                     ]
                 )['header'];
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk id="123456", ts="1353809207", nonce="Ygvqdz"'
                     . ', hash="2QfCt3GuY9HQnHWyWD3wX68ZOKbynqlfYmuO2ZBRqtY="'
                     . ', mac="HTgtd0jPI6E4izx8e4OHdO36q00xFCU0FolNq3RiCYs="'
@@ -144,7 +144,7 @@ class ClientTest extends TestCase
                     ]
                 )['header'];
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk id="123456", ts="1353809207", nonce="Ygvqdz"'
                     . ', hash="q/t+NNAkQZNlq/aAD6PlexImwQTxwgT2MahfTa9XRLA="'
                     . ', mac="U5k16YEzn3UnBHKeBzsDXn067Gu3R4YaY6xOt9PYRZM="'
@@ -177,7 +177,7 @@ class ClientTest extends TestCase
                     $options
                 )['header'];
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk id="123456", ts="1353809207", nonce="Ygvqdz"'
                     . ', hash="2QfCt3GuY9HQnHWyWD3wX68ZOKbynqlfYmuO2ZBRqtY="'
                     . ', mac="HTgtd0jPI6E4izx8e4OHdO36q00xFCU0FolNq3RiCYs="'
@@ -379,7 +379,7 @@ class ClientTest extends TestCase
 
                 $headers = (new Client)->authenticate($responseHeaders, $credentials, $artifacts);
 
-                expect($headers)->equals([
+                expect($headers)->toEqual([
                     'server-authorization' => [
                         'mac' => 'XIJRsMl/4oL+nn+vKoeVZPdCHXB4yJkNnBbTbHFZUYE=',
                         'hash' => 'f9cDF/TDm7TkYRLnGwRMfeDzT6LixQVLvrIKhh0vgmM=',
@@ -427,7 +427,7 @@ class ClientTest extends TestCase
                     ['payload' => $payload]
                 );
 
-                expect($headers)->equals([
+                expect($headers)->toEqual([
                     'server-authorization' => [
                         'mac' => 'odsVGUq0rCoITaiNagW22REIpqkwP9zt5FyqqOW9Zj8=',
                         'hash' => 'f9cDF/TDm7TkYRLnGwRMfeDzT6LixQVLvrIKhh0vgmM=',
@@ -535,7 +535,7 @@ class ClientTest extends TestCase
                     []
                 );
 
-                expect($headers)->equals(['www-authenticate' => ['error' => 'Stale timestamp']]);
+                expect($headers)->toEqual(['www-authenticate' => ['error' => 'Stale timestamp']]);
             });
         });
     }
@@ -560,7 +560,7 @@ class ClientTest extends TestCase
                     ]
                 );
 
-                expect(gettype($bewit))->equals('string');
+                expect(gettype($bewit))->toEqual('string');
             });
 
             $this->it('throws an error if the URI is not a string or an array', function () {
@@ -678,8 +678,8 @@ class ClientTest extends TestCase
                     ]
                 );
 
-                expect($auth['ts'])->equals(1353809207);
-                expect($auth['nonce'])->equals('abc123');
+                expect($auth['ts'])->toEqual(1353809207);
+                expect($auth['nonce'])->toEqual('abc123');
             });
 
             $this->it('should throw an error if the host is invalid', function () {

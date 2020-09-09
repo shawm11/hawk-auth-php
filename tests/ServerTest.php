@@ -41,7 +41,7 @@ class ServerTest extends TestCase
                     ]
                 )['credentials'];
 
-                expect($credentials['user'])->equals('steve');
+                expect($credentials['user'])->toEqual('steve');
             });
 
             $this->it('should parse a valid authentication header (SHA256)', function () {
@@ -63,7 +63,7 @@ class ServerTest extends TestCase
                         ]
                     )['credentials'];
 
-                    expect($credentials['user'])->equals('steve');
+                    expect($credentials['user'])->toEqual('steve');
             });
 
             $this->it('should parse a valid authentication header (host override)', function () {
@@ -85,7 +85,7 @@ class ServerTest extends TestCase
                     ]
                 )['credentials'];
 
-                expect($credentials['user'])->equals('steve');
+                expect($credentials['user'])->toEqual('steve');
             });
 
             $this->it('should parse a valid authentication header (host port override)', function () {
@@ -108,7 +108,7 @@ class ServerTest extends TestCase
                     ]
                 )['credentials'];
 
-                expect($credentials['user'])->equals('steve');
+                expect($credentials['user'])->toEqual('steve');
             });
 
             $this->it('should parse a valid authentication header (POST with payload)', function () {
@@ -131,7 +131,7 @@ class ServerTest extends TestCase
                     ]
                 )['credentials'];
 
-                expect($credentials['user'])->equals('steve');
+                expect($credentials['user'])->toEqual('steve');
             });
 
             $this->it('should error on missing hash', function () {
@@ -178,7 +178,7 @@ class ServerTest extends TestCase
                         }
                     );
                 } catch (UnauthorizedException $e) {
-                    expect($e->getMessage())->equals('Stale timestamp');
+                    expect($e->getMessage())->toEqual('Stale timestamp');
 
                     $header = $e->getWwwAuthenticateHeader();
                     $matches = [];
@@ -190,7 +190,7 @@ class ServerTest extends TestCase
                     $ts = $matches[1];
                     $now = (new Utils)->now();
 
-                    expect(abs((intval($ts, 10) * 1000) - $now))->lessThanOrEqual(1000);
+                    expect(abs((intval($ts, 10) * 1000) - $now))->toBeLessThanOrEqualTo(1000);
 
                     $credentials = $this->credentialsFunc('123456');
                     $attributes = [
@@ -247,7 +247,7 @@ class ServerTest extends TestCase
                     $options
                 )['credentials'];
 
-                expect($credentials['user'])->equals('steve');
+                expect($credentials['user'])->toEqual('steve');
 
                 $this->assertThrowsWithMessage(
                     UnauthorizedException::class,
@@ -317,8 +317,8 @@ class ServerTest extends TestCase
                 $credentials1 = (new Server)->authenticate($reqSteve, $credentialsFunction, $options)['credentials'];
                 $credentials2 = (new Server)->authenticate($reqBob, $credentialsFunction, $options)['credentials'];
 
-                expect($credentials1['user'])->equals('steve');
-                expect($credentials2['user'])->equals('bob');
+                expect($credentials1['user'])->toEqual('steve');
+                expect($credentials2['user'])->toEqual('bob');
             });
 
             $this->it('should error on an invalid authentication header: wrong scheme', function () {
@@ -905,7 +905,7 @@ class ServerTest extends TestCase
                     ]
                 );
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk mac="n14wVJK4cOxAytPUMc5bPezQzuJGl5n7MYXhFQgEKsE="'
                     . ', hash="f9cDF/TDm7TkYRLnGwRMfeDzT6LixQVLvrIKhh0vgmM="'
                     . ', ext="response-specific"'
@@ -939,7 +939,7 @@ class ServerTest extends TestCase
                     ]
                 );
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk mac="i8/kUBDx0QF+PpCtW860kkV/fa9dbwEoe/FpGUXowf0="'
                     . ', hash="q/t+NNAkQZNlq/aAD6PlexImwQTxwgT2MahfTa9XRLA="'
                     . ', ext="response-specific"'
@@ -981,7 +981,7 @@ class ServerTest extends TestCase
                     $options
                 );
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk mac="n14wVJK4cOxAytPUMc5bPezQzuJGl5n7MYXhFQgEKsE="'
                     . ', hash="f9cDF/TDm7TkYRLnGwRMfeDzT6LixQVLvrIKhh0vgmM="'
                     . ', ext="response-specific"'
@@ -1015,7 +1015,7 @@ class ServerTest extends TestCase
                     ]
                 );
 
-                expect($header)->equals(
+                expect($header)->toEqual(
                     'Hawk mac="6PrybJTJs20jsgBw5eilXpcytD8kUbaIKNYXL+6g0ns="'
                     . ', hash="f9cDF/TDm7TkYRLnGwRMfeDzT6LixQVLvrIKhh0vgmM="'
                 );
@@ -1173,8 +1173,8 @@ class ServerTest extends TestCase
                         []
                     );
                 } catch (BadRequestException $e) {
-                    expect($e->getMessage())->equals('Resource path exceeds max length');
-                    expect($e->getCode())->equals(400);
+                    expect($e->getMessage())->toEqual('Resource path exceeds max length');
+                    expect($e->getCode())->toEqual(400);
 
                     return;
                 }
@@ -1555,7 +1555,7 @@ class ServerTest extends TestCase
                     }
                 )['credentials'];
 
-                expect($credentials['user'])->equals('steve');
+                expect($credentials['user'])->toEqual('steve');
             });
 
             $this->it('should fail authorization on mismatching host', function () {
@@ -1638,7 +1638,7 @@ class ServerTest extends TestCase
                     ]
                 )['credentials'];
 
-                expect($credentials['user'])->equals('steve');
+                expect($credentials['user'])->toEqual('steve');
             });
 
             $this->it('should fail authorization on invalid authorization', function () {
