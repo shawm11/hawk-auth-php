@@ -4018,5 +4018,6 @@
     "platform-dev": {
         "php": ">=7.3.0"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "1.1.0",
+    "version": "1.0.7"
 }
