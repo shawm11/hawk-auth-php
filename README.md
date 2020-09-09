@@ -42,8 +42,9 @@ According to the [Hawk README](https://github.com/outmoded/hawk/blob/84487d5a030
 > **Hawk** is an HTTP authentication scheme using a message authentication code
 > (MAC) algorithm to provide partial HTTP request cryptographic verification.
 
-Note that Hawk is not a complete replacement of OAuth. As candidly stated in the
-[_Frequently Asked Questions_ section of the Hawk README] (https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md#does-hawk-have-anything-to-do-with-oauth):
+Note that Hawk is not a complete replacement of OAuth. It is candidly stated in
+the [_Frequently Asked Questions_ section of the Hawk README] (https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md#does-hawk-have-anything-to-do-with-oauth)
+that:
 
 > **Hawk** was originally proposed as the OAuth MAC Token specification.
 > However, the OAuth working group in its consistent incompetence failed to
@@ -54,7 +55,7 @@ Note that Hawk is not a complete replacement of OAuth. As candidly stated in the
 >
 > **Hawk** provides a simple HTTP authentication scheme for making client-server
 > requests. It does not address the OAuth use case of delegating access to a
-> third party. If you are looking for an OAuth alternative, check out [Oz] (https://github.com/shawm11/oz-auth-php.
+> third party. If you are looking for an OAuth alternative, check out [Oz] (https://github.com/shawm11/oz-auth-php).
 
 More more information about Hawk, check out its [README](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md)
 
@@ -264,14 +265,14 @@ section of [Hawk's README](https://github.com/outmoded/hawk/blob/84487d5a030c147
 Related Projects
 ----------------
 
-- [Oz PHP Implementation](https://github.com/shawm11/oz-auth-php) — PHP
-  implementation of Oz, a web authorization protocol that is an alternative to
-  OAuth 1.0a and OAuth 2.0. Oz utilizes both Hawk and iron.
+-   [Oz PHP Implementation](https://github.com/shawm11/oz-auth-php) — Oz is a
+    web authorization protocol that is an alternative to OAuth 1.0a and
+    OAuth 2.0 three-legged authorization. Oz utilizes both Hawk and _iron_.
 
-- [Iron PHP Implementation](https://github.com/shawm11/iron-crypto-php) — PHP
-  implementation of _iron_ (spelled with all lowercase), a cryptographic utility
-  for sealing a JSON object into an encapulated token. _iron_ can be considered
-  as an alternative to JSON Web Tokens (JWT).
+-   [Iron PHP Implementation](https://github.com/shawm11/iron-crypto-php) —
+    _iron_ (spelled with all lowercase), a cryptographic utility for sealing a
+    JSON object into an encapulated token. _iron_ can be considered as an
+    alternative to JSON Web Tokens (JWT).
 
 Contributing/Development
 ------------------------
