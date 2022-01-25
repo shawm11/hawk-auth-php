@@ -251,11 +251,19 @@ class Server implements ServerInterface
          * Calculate payload hash
          */
 
+        // Unlike the original Javascript version of Hawk, we need to
+        // specifically check if `payload` is defined in the options because
+        // PHP throws an "undefined index" error when there is an attempt to use
+        // an undefined variable. The original Javascript version of Hawk relied
+        // on the fact that Javascript sets an undefined variable a special
+        // falsey 'undefined' value, instead of throwing an error.
         if (!$artifacts['hash'] &&
-            (!empty($options['payload']) || $options['payload'] === '')
+            (!empty($options['payload']) || (isset($options['payload']) && $options['payload'] === ''))
         ) {
             $artifacts['hash'] = $this->Crypto->calculatePayloadHash(
-                $options['payload'],
+                // If the payload was not defined set it to an empty string.
+                // Again, a check not needed in the original Javascript version.
+                isset($options['payload']) ? $options['payload'] : '',
                 $credentials['algorithm'],
                 $options['contentType']
             );
