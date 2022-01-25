@@ -940,6 +940,69 @@ class ServerTest extends TestCase
                 );
             });
 
+            $this->it('should generate header (missing payload)', function () {
+                $header = (new Server)->header(
+                    [
+                        'id' => '123456',
+                        'key' => 'werxhqb98rpaxn39848xrunpaw3489ruxnpa98w4rxn',
+                        'algorithm' => 'sha256',
+                        'user' => 'steve'
+                    ],
+                    [
+                        'method' => 'POST',
+                        'host' => 'example.com',
+                        'port' => '8080',
+                        'resource' => '/resource/4?filter=a',
+                        'ts' => '1398546787',
+                        'nonce' => 'xUwusx',
+                        'ext' => 'some-app-data',
+                        'mac' => 'dvIvMThwi28J61Jc3P0ryAhuKpanU63GXdx6hkmQkJA=',
+                        'id' => '123456'
+                    ],
+                    [
+                        'contentType' => 'text/plain',
+                        'ext' => 'response-specific'
+                    ]
+                );
+
+                expect($header)->equals(
+                    'Hawk mac="h+gDSdLlERbcJ3YcJfdOfTuJfRB/yePqbaWOHthpUyc="'
+                    . ', ext="response-specific"'
+                );
+            });
+
+            $this->it('should generate header (null payload)', function () {
+                $header = (new Server)->header(
+                    [
+                        'id' => '123456',
+                        'key' => 'werxhqb98rpaxn39848xrunpaw3489ruxnpa98w4rxn',
+                        'algorithm' => 'sha256',
+                        'user' => 'steve'
+                    ],
+                    [
+                        'method' => 'POST',
+                        'host' => 'example.com',
+                        'port' => '8080',
+                        'resource' => '/resource/4?filter=a',
+                        'ts' => '1398546787',
+                        'nonce' => 'xUwusx',
+                        'ext' => 'some-app-data',
+                        'mac' => 'dvIvMThwi28J61Jc3P0ryAhuKpanU63GXdx6hkmQkJA=',
+                        'id' => '123456'
+                    ],
+                    [
+						'payload' => null,
+                        'contentType' => 'text/plain',
+                        'ext' => 'response-specific'
+                    ]
+                );
+
+                expect($header)->equals(
+                    'Hawk mac="h+gDSdLlERbcJ3YcJfdOfTuJfRB/yePqbaWOHthpUyc="'
+                    . ', ext="response-specific"'
+                );
+            });
+
             $this->it('should generate header (pre calculated hash)', function () {
                 $credentials = [
                     'id' => '123456',
