@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.8](https://github.com/shawm11/hawk-auth-php/compare/v1.0.7...v1.0.8) (2022-01-25)
+
+
+### Bug Fixes
+
+* **server:** allow `payload` to be omitted in options in header() ([4fd474b](https://github.com/shawm11/hawk-auth-php/commit/4fd474be8b49ecba3acee287fde0fd86e6d6b5bd)), closes [#1](https://github.com/shawm11/hawk-auth-php/issues/1)
+
 ### [1.0.7](https://github.com/shawm11/hawk-auth-php/compare/v1.0.6...v1.0.7) (2020-09-09)
 
 
