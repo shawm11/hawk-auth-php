@@ -1,10 +1,8 @@
-Contributing Guidelines
-=======================
+<!-- omit in toc -->
+# Contributing Guidelines
 
-Table of Contents
------------------
-
-<!--lint disable list-item-spacing-->
+<!-- omit in toc -->
+## Table of Contents
 
 - [Testing](#testing)
 - [Coding Style](#coding-style)
@@ -24,21 +22,18 @@ Table of Contents
 - [Git Hooks](#git-hooks)
   - [Installing Hooks](#installing-hooks)
 
-<!--lint enable list-item-spacing-->
-
-Testing
--------
+## Testing
 
 This project uses [PHPUnit](https://phpunit.de) for unit testing. The tests are
 usually in a Behavior-Driven Development (BDD) style.
 
 To run all tests, use the following command.
+
 ```shell
 "vendor/bin/phpunit"
 ```
 
-Coding Style
-------------
+## Coding Style
 
 This project follows the [PSR-2 Coding Style
 Guide](https://www.php-fig.org/psr/psr-2/) for PHP code.
@@ -69,8 +64,7 @@ public function bind($abstract, $concrete = null, $shared = false)
 }
 ```
 
-Commit Message Guidelines
--------------------------
+## Commit Message Guidelines
 
 The commit message guidelines are based on
 [Karma's commit message guidelines](http://karma-runner.github.io/1.0/dev/git-commit-msg.html)
@@ -95,6 +89,7 @@ The `<header>` is the first line of the message and is mandatory, and the
 **70** characters.
 
 #### Subject
+
 The `<subject>` contains succinct description of the change:
 
 - Use the imperative, present tense: "change" not "changed" nor "changes"
@@ -102,6 +97,7 @@ The `<subject>` contains succinct description of the change:
 - No period (.) at the end
 
 #### Type
+
 The `<type>` must be one of the following:
 
 <!--lint disable list-item-spacing-->
@@ -131,7 +127,7 @@ to assign to a single component), in which case the parentheses are omitted.
 
 #### Revert
 
-If the commit reverts a previous commit, it should begin with `revert: `,
+If the commit reverts a previous commit, it should begin with `revert:`,
 followed by the header of the reverted commit. In the body it should say:
 `This reverts commit <hash>.`, where the hash is the SHA (at least the first 8
 characters) of the commit being reverted.
@@ -143,6 +139,7 @@ characters) of the commit being reverted.
 - Should be wrapped at **80** characters
 
 For more info about message body, see:
+
 - <http://365git.tumblr.com/post/3308646748/writing-git-commit-messages>
 - <http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>
 
@@ -187,18 +184,17 @@ The version in our package.json gets copied to the one we publish, and users
 need the latest of these.
 ```
 
-Development Tasks CLI Commands
-------------------------------
+## Development Tasks CLI Commands
 
 CLI commands for development and deployment tasks are handled by
 [Robo](https://robo.li/). Use the following command to get a list of available
 Robo commands and their descriptions.
+
 ```shell
 "./vendor/bin/robo"
 ```
 
-Version Bump and Changelog
---------------------------
+## Version Bump and Changelog
 
 The version is bumped automatically and the `CHANGELOG.md` file is generated
 from the commit messages using [development task CLI commands](#development-tasks-cli-commands).
@@ -206,8 +202,7 @@ Installing the [Standard Version](https://github.com/conventional-changelog/stan
 Node/NPM package is required to bump the version and generate the `CHANGELOG.md`
 file successfully.
 
-Git Hooks
----------
+## Git Hooks
 
 The Git hook scripts are stored in the `bin/hooks` directory. Each of the hook
 scripts execute their corresponding Artisan `git:hook-*` command. For example,
@@ -219,6 +214,7 @@ and \*nix systems.
 ### Installing Hooks
 
 To install the hooks run the following command:
+
 ```shell
 git config core.hooksPath ./bin/hooks
 ```

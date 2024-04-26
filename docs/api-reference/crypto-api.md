@@ -1,10 +1,8 @@
-Crypto API Reference
-====================
+<!-- omit in toc -->
+# Crypto API Reference
 
-Table of Contents
------------------
-
-<!--lint disable list-item-spacing-->
+<!-- omit in toc -->
+## Table of Contents
 
 - [Namespace](#namespace)
 - [`Crypto` Class](#crypto-class)
@@ -20,13 +18,11 @@ Table of Contents
   - [`timestampMessage($credentials, $localtimeOffsetMsec)`](#timestampmessagecredentials-localtimeoffsetmsec)
     - [`timestampMessage` Parameters](#timestampmessage-parameters)
 
-Namespace
----------
+## Namespace
 
 All classes and sub-namespaces are within the `Shawm11\Hawk\Crypto` namespace.
 
-`Crypto` Class
---------------
+## `Crypto` Class
 
 Contains helper functions for various cryptographic operations.
 
@@ -134,5 +130,3 @@ Return an array that contains the following:
      algorithm in the [`$algorithms` array property](#algorithms-property).
 1. _float_ `$localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
    milliseconds) of the local time
-
-<!--lint enable list-item-spacing-->

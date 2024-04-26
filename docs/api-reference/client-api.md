@@ -1,10 +1,8 @@
-Client API Reference
-====================
+<!-- omit in toc -->
+# Client API Reference
 
-Table of Contents
------------------
-
-<!--lint disable list-item-spacing-->
+<!-- omit in toc -->
+## Table of Contents
 
 - [Namespace](#namespace)
 - [`Client` Class](#client-class)
@@ -18,13 +16,11 @@ Table of Contents
     - [`message` Parameters](#message-parameters)
 - [`ClientException` Class](#clientexception-class)
 
-Namespace
----------
+## Namespace
 
 All classes and sub-namespaces are within the `Shawm11\Hawk\Client` namespace.
 
-`Client` Class
---------------
+## `Client` Class
 
 Contains methods for the client, which makes requests to the server.
 
@@ -184,9 +180,6 @@ Returns an array that contains the following:
    - _float_ `localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
      milliseconds) of the client's local time compared to the server's local
 
-`ClientException` Class
------------------------
+## `ClientException` Class
 
 The exception that is thrown when there is a _client_ Hawk error.
-
-<!--lint enable list-item-spacing-->

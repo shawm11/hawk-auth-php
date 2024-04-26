@@ -1,5 +1,5 @@
-Hawk Authentication PHP
-=======================
+<!-- omit in toc -->
+# Hawk Authentication PHP
 
 ![Version Number](https://img.shields.io/packagist/v/shawm11/hawk-auth.svg)
 ![PHP Version](https://img.shields.io/packagist/php-v/shawm11/hawk-auth.svg)
@@ -13,18 +13,16 @@ will not be maintained anymore, **this library will continue to be maintained**.
 The original JavaScript version of Hawk was complete and only had periodic
 documentation and library dependency updates.
 
-Table of Contents
------------------
-
-<!--lint disable list-item-spacing-->
+<!-- omit in toc -->
+## Table of Contents
 
 - [What is Hawk?](#what-is-hawk)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage Examples](#usage-examples)
-  - [Server](#server)
-  - [Client](#client)
+  - [Server Example](#server-example)
+  - [Client Example](#client-example)
 - [API References](#api-references)
 - [Security Considerations](#security-considerations)
 - [Related Projects](#related-projects)
@@ -32,10 +30,7 @@ Table of Contents
 - [Versioning](#versioning)
 - [License](#license)
 
-<!--lint enable list-item-spacing-->
-
-What is Hawk?
--------------
+## What is Hawk?
 
 According to the [Hawk README](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md):
 
@@ -43,7 +38,7 @@ According to the [Hawk README](https://github.com/outmoded/hawk/blob/84487d5a030
 > (MAC) algorithm to provide partial HTTP request cryptographic verification.
 
 Note that Hawk is not a complete replacement of OAuth. It is candidly stated in
-the [_Frequently Asked Questions_ section of the Hawk README] (https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md#does-hawk-have-anything-to-do-with-oauth)
+the [_Frequently Asked Questions_ section of the Hawk README](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md#does-hawk-have-anything-to-do-with-oauth)
 that:
 
 > **Hawk** was originally proposed as the OAuth MAC Token specification.
@@ -55,12 +50,11 @@ that:
 >
 > **Hawk** provides a simple HTTP authentication scheme for making client-server
 > requests. It does not address the OAuth use case of delegating access to a
-> third party. If you are looking for an OAuth alternative, check out [Oz] (https://github.com/shawm11/oz-auth-php).
+> third party. If you are looking for an OAuth alternative, check out [Oz](https://github.com/shawm11/oz-auth-php).
 
 More more information about Hawk, check out its [README](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md)
 
-Getting Started
----------------
+## Getting Started
 
 ### Prerequisites
 
@@ -78,8 +72,7 @@ Download and install using [Composer](https://getcomposer.org/):
 composer require shawm11/hawk-auth
 ```
 
-Usage Examples
---------------
+## Usage Examples
 
 The examples in this section do not work without modification. However, these
 examples should be enough to demonstrate how to use this package.
@@ -101,15 +94,15 @@ use Shawm11\Hawk\Server\UnauthorizedException as HawkUnauthorizedException;
 function handleRequest() {
     $hawkServer = new HawkServer;
     $result = [];
-	// Pretend to get request data from a client
-	$requestData = [
-		'method' => 'GET',
-		'url' => '/resource/4?a=1&b=2',
-		'host' => 'example.com',
-		'port' => 8080,
+    // Pretend to get request data from a client
+    $requestData = [
+        'method' => 'GET',
+        'url' => '/resource/4?a=1&b=2',
+        'host' => 'example.com',
+        'port' => 8080,
         // Authorization header
-		'authorization' => 'Hawk id="dh37fgj492je", ts="1353832234", nonce="j4h3g2", ext="some-app-ext-data", mac="6R4rV5iE+NPoym+WwjeHzjAGXUtLNIxmo1vpMofpLAE="'
-	];
+        'authorization' => 'Hawk id="dh37fgj492je", ts="1353832234", nonce="j4h3g2", ext="some-app-ext-data", mac="6R4rV5iE+NPoym+WwjeHzjAGXUtLNIxmo1vpMofpLAE="'
+    ];
     // Function for retrieving credentials
     $credentialsFunc = function ($id) {
         // Pretend to retrieve the credentials (maybe from database) using the given ID ($id)
@@ -134,7 +127,7 @@ function handleRequest() {
     } catch (HawkUnauthorizedException $e) {
         $httpStatusCode = $e->getCode();
         // Run a fictional function that sets the header
-    	setHeaderSomehow('WWW-Authenticate', $e->getWwwAuthenticateHeader());
+        setHeaderSomehow('WWW-Authenticate', $e->getWwwAuthenticateHeader());
 
         // Send HTTP status 401 (Unauthorized) response...
 
@@ -154,19 +147,19 @@ function handleRequest() {
 }
 
 function sendResponse($hawkServer, $credentials, $artifacts) {
-	$header = '';
+    $header = '';
 
     try {
         $header = $hawkServer->header($credentials, $artifact); // Output is a string
     } catch (HawkServerException $e) {
         echo 'ERROR: ' . $e->getMessage();
         return;
-	}
+    }
 
-	// Run a fictional function that sets the header
-	setHeaderSomehow('Server-Authorization', $header);
+    // Run a fictional function that sets the header
+    setHeaderSomehow('Server-Authorization', $header);
 
-	// Now do some other stuff to send the response
+    // Now do some other stuff to send the response
 }
 ```
 
@@ -182,15 +175,15 @@ use Shawm11\Hawk\Client\ClientException as HawkClientException;
 function makeRequest($requestData) {
     $hawkClient = new HawkClient;
     $result = [];
-	$uri = 'http://example.com/resource?a=b';
-	$options = [
+    $uri = 'http://example.com/resource?a=b';
+    $options = [
         // This is required
-		'credentials' => [
-			'id' => 'dh37fgj492je',
+        'credentials' => [
+            'id' => 'dh37fgj492je',
             'key' => 'aoijedoaijsdlaksjdl',
             'algorithm' => 'sha256'
-		]
-	];
+        ]
+    ];
 
     try {
         $result = $hawkClient->header($uri, 'POST', $options);
@@ -202,15 +195,15 @@ function makeRequest($requestData) {
     $header = $result['header']; // a string
     $artifacts = $result['artifacts']; // an array
 
-	// Run a fictional function that sets the header
-	setHeaderSomehow('Authorization', $header);
+    // Run a fictional function that sets the header
+    setHeaderSomehow('Authorization', $header);
 
     // Do some more stuff before sending request
 
-	// Now send the request
-	sendRequestSomehow(); // Not a real function
+    // Now send the request
+    sendRequestSomehow(); // Not a real function
 
-	// Wait for response from server...
+    // Wait for response from server...
 
     // Now do some stuff after receiving response (See the `responseCallback` function below)
     responseCallback($hawkClient, $options['credentials'], $artifacts);
@@ -218,12 +211,12 @@ function makeRequest($requestData) {
 
 function responseCallback($hawkClient, $credentials, $artifacts) {
     // Somehow get the headers used in the response
-	$responseHeaders = [
+    $responseHeaders = [
         // Only need these 3 headers
-		'Server-Authorization' => 'some stuff',
-		'WWW-Authentication' => 'some more stuff',
-		'Content-Type' => 'application/json' // A different content type can be used
-	];
+        'Server-Authorization' => 'some stuff',
+        'WWW-Authentication' => 'some more stuff',
+        'Content-Type' => 'application/json' // A different content type can be used
+    ];
 
     // Validate the server's response
     try {
@@ -234,14 +227,13 @@ function responseCallback($hawkClient, $credentials, $artifacts) {
         // If the server's response is invalid, an error is thrown
         echo 'ERROR: ' . $e->getMessage();
         return;
-	}
+    }
 
-	// Now do some other stuff with the response
+    // Now do some other stuff with the response
 }
 ```
 
-API References
---------------
+## API References
 
 <!--lint disable list-item-spacing-->
 
@@ -256,37 +248,31 @@ API References
 
 <!--lint enable list-item-spacing-->
 
-Security Considerations
------------------------
+## Security Considerations
 
 See the [Security Considerations](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md#security-considerations)
 section of [Hawk's README](https://github.com/outmoded/hawk/blob/84487d5a030c14707aa852b7800eee841d8029ae/README.md).
 
-Related Projects
-----------------
+## Related Projects
 
--   [Oz PHP Implementation](https://github.com/shawm11/oz-auth-php) — Oz is a
-    web authorization protocol that is an alternative to OAuth 1.0a and
-    OAuth 2.0 three-legged authorization. Oz utilizes both Hawk and _iron_.
+- [Oz PHP Implementation](https://github.com/shawm11/oz-auth-php) — Oz is a web
+  authorization protocol that is an alternative to OAuth 1.0a and OAuth 2.0
+  three-legged authorization. Oz utilizes both Hawk and _iron_.
+- [Iron PHP Implementation](https://github.com/shawm11/iron-crypto-php) — _iron_
+  (spelled with all lowercase), a cryptographic utility for sealing a JSON
+  object into an encapulated token. _iron_ can be considered as an
+  alternative to JSON Web Tokens (JWT).
 
--   [Iron PHP Implementation](https://github.com/shawm11/iron-crypto-php) —
-    _iron_ (spelled with all lowercase), a cryptographic utility for sealing a
-    JSON object into an encapulated token. _iron_ can be considered as an
-    alternative to JSON Web Tokens (JWT).
-
-Contributing/Development
-------------------------
+## Contributing/Development
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on coding style, Git
 commit message guidelines, and other development information.
 
-Versioning
-----------
+## Versioning
 
 This project uses [SemVer](http://semver.org/) for versioning. For the versions
 available, see the tags on this repository.
 
-License
--------
+## License
 
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

@@ -1,10 +1,8 @@
-Server API Reference
-====================
+<!-- omit in toc -->
+# Server API Reference
 
-Table of Contents
------------------
-
-<!--lint disable list-item-spacing-->
+<!-- omit in toc -->
+## Table of Contents
 
 - [Namespace](#namespace)
 - [`Server` Class](#server-class)
@@ -30,13 +28,11 @@ Table of Contents
   - [`getWwwAuthenticateHeaderAttributes()`](#getwwwauthenticateheaderattributes)
   - [`getWwwAuthenticateHeader()`](#getwwwauthenticateheader)
 
-Namespace
----------
+## Namespace
 
 All classes and sub-namespaces are within the `Shawm11\Hawk\Server` namespace.
 
-`Server` Class
---------------
+## `Server` Class
 
 Contains methods for the server, which receives client requests. The server
 usually is the system that stores and manages user credentials and data.
@@ -114,7 +110,7 @@ Returns an array that contains the following if there were no errors:
 
 Authenticate payload hash using the payload, credentials, content type to
 calculate the hash. Only used when payload cannot be provided during
-[`authenticate()`](#authenticaterequest-credentialsFunc-options).
+[`authenticate()`](#authenticaterequest-credentialsfunc-options).
 
 #### `authenticatePayload` Parameters
 
@@ -132,7 +128,7 @@ calculate the hash. Only used when payload cannot be provided during
 ### `authenticatePayloadHash($calculatedHash, $artifacts)`
 
 Authenticate payload hash using the given pre-calculated hash. Only used when
-payload cannot be provided when using [`authenticate()`](#authenticaterequest-credentialsFunc-options).
+payload cannot be provided when using [`authenticate()`](#authenticaterequest-credentialsfunc-options).
 
 #### `authenticatePayloadHash` Parameters
 
@@ -270,13 +266,11 @@ Returns and array that includes the following (if the message is valid):
      even if given the same data. It must throw an error if the nonce check
      fails.
 
-`ServerException` Class
------------------------
+## `ServerException` Class
 
 The exception that is thrown when there is a _server_ Hawk error.
 
-`BadRequestException` Class
----------------------------
+## `BadRequestException` Class
 
 A type of `ServerException` exception that represents an HTTP `400 Bad Request`
 server response.
@@ -290,8 +284,7 @@ always `400`, as an integer.
 
 Inherited method from PHP's `Exception` class. Gives the error message text.
 
-`UnauthorizedException` Class
------------------------------
+## `UnauthorizedException` Class
 
 A type of `ServerException` exception that represents an HTTP `401 Unauthorized`
 server response.
@@ -314,7 +307,3 @@ Get the associative array of keys and values included in the HTTP
 
 Get the value the HTTP `WWW-Authenticate` header should be set to in the
 server's response.
-
-<!--lint enable maximum-heading-length-->
-
-<!--lint enable list-item-spacing-->

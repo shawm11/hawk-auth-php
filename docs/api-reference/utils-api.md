@@ -1,10 +1,8 @@
-Utils API Reference
-===================
+<!-- omit in toc -->
+# Utils API Reference
 
-Table of Contents
------------------
-
-<!--lint disable list-item-spacing-->
+<!-- omit in toc -->
+## Table of Contents
 
 - [Namespace](#namespace)
 - [`Utils` Class](#utils-class)
@@ -24,13 +22,11 @@ Table of Contents
   - [`base64urlDecode($data)`](#base64urldecodedata)
     - [`base64urlDecode` Parameters](#base64urldecode-parameters)
 
-Namespace
----------
+## Namespace
 
 All classes and sub-namespaces are within the `Shawm11\Hawk\Utils` namespace.
 
-`Utils` Class
--------------
+## `Utils` Class
 
 Contains helper functions that are _not_ cryptographic operations.
 
@@ -114,5 +110,3 @@ Decode the given URL-safe Base64 string. Follows RFC 4648.
 #### `base64urlDecode` Parameters
 
 1. _string_ `$data` — (Required) URL-safe Base64 string to decode
-
-<!--lint enable list-item-spacing-->
