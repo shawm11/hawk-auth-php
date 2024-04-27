@@ -19,15 +19,7 @@ class Utils implements UtilsInterface
     ];
 
     /**
-     * RegEx for matching the host and port portions of the `Host` HTTP header
-     * value. Supports domain names, IPv4, and IPv6.
-     *
-     * @var string
-     */
-    protected $hostHeaderRegex = "/^(?:(?:\r\n)?\s)*((?:[^:]+)|(?:\[[^\]]+\]))(?::(\d+))?(?:(?:\r\n)?\s)*$/";
-
-    /**
-     * RegeEx for matching the `Authorization` HTTP header value.
+     * RegEx for matching the `Authorization` HTTP header value.
      *
      * @var string
      */
