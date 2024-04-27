@@ -44,7 +44,7 @@ class Crypto implements CryptoInterface
         if ($resource && $resource[0] !== '/') {
             $url = parse_url($resource);
             $resource = (empty($url['path']) ? '' : $url['path'])
-                      . (empty($url['query']) ? '' : ('?' . $url['query']));
+                        . (empty($url['query']) ? '' : ('?' . $url['query']));
         }
 
         /*
@@ -77,8 +77,8 @@ class Crypto implements CryptoInterface
     public function calculatePayloadHash($payload, $algorithm, $contentType = null)
     {
         $data = "hawk.{$this->headerVersion}.payload\n"
-              . (new Utils)->parseContentType($contentType) . "\n"
-              . ($payload ? $payload : '') . "\n";
+                . (new Utils)->parseContentType($contentType) . "\n"
+                . ($payload ? $payload : '') . "\n";
         $hash = hash($algorithm, $data, true);
 
         return base64_encode($hash);

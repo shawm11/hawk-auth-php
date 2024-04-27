@@ -204,7 +204,7 @@ class Client implements ClientInterface
         }
 
         if (!isset($options['payload']) ||
-           (!$options['payload'] && $options['payload'] !== '')
+            (!$options['payload'] && $options['payload'] !== '')
         ) {
             return $result;
         }

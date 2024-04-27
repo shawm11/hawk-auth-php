@@ -31,7 +31,7 @@ class ServerTest extends TestCase
                         'host' => 'example.com',
                         'port' => 8080,
                         'authorization' => 'Hawk id="1", ts="1353788437", nonce="k3j4h2"'
-                                         . ', mac="zy79QQ5/EYFmQqutVnYb73gAc/U=", ext="hello"'
+                                            . ', mac="zy79QQ5/EYFmQqutVnYb73gAc/U=", ext="hello"'
                     ],
                     function ($id) {
                         return $this->credentialsFunc($id);
@@ -52,8 +52,8 @@ class ServerTest extends TestCase
                             'host' => 'example.com',
                             'port' => 8000,
                             'authorization' => 'Hawk id="dh37fgj492je", ts="1353832234", nonce="j4h3g2"'
-                                             . ', mac="m8r1rHbXN6NgO+KIIhjO7sFRyd78RNGVUwehe8Cp2dU="'
-                                             . ', ext="some-app-data"'
+                                                . ', mac="m8r1rHbXN6NgO+KIIhjO7sFRyd78RNGVUwehe8Cp2dU="'
+                                                . ', ext="some-app-data"'
                         ],
                         function ($id) {
                             return $this->credentialsFunc($id);
@@ -74,7 +74,7 @@ class ServerTest extends TestCase
                         'host' => 'example1.com',
                         'port' => 8080,
                         'authorization' => 'Hawk id="1", ts="1353788437", nonce="k3j4h2"'
-                                         . ', mac="zy79QQ5/EYFmQqutVnYb73gAc/U=", ext="hello"'
+                                            . ', mac="zy79QQ5/EYFmQqutVnYb73gAc/U=", ext="hello"'
                     ],
                     function ($id) {
                         return $this->credentialsFunc($id);
@@ -96,7 +96,7 @@ class ServerTest extends TestCase
                         'host' => 'example1.com',
                         'port' => 80,
                         'authorization' => 'Hawk id="1", ts="1353788437", nonce="k3j4h2"'
-                                         . ', mac="zy79QQ5/EYFmQqutVnYb73gAc/U=", ext="hello"'
+                                            . ', mac="zy79QQ5/EYFmQqutVnYb73gAc/U=", ext="hello"'
                     ],
                     function ($id) {
                         return $this->credentialsFunc($id);
@@ -119,8 +119,8 @@ class ServerTest extends TestCase
                         'host' => 'example.com',
                         'port' => 8080,
                         'authorization' => 'Hawk id="123456", ts="1357926341", nonce="1AwuJD"'
-                                         . ', hash="1kFuupNATsh9T4rfyh1itrLl9hRTWlkXV97J7IJ4QKk="'
-                                         . ', ext="some-app-data", mac="Y9wtRQxYhRa8q4oh9h/W4mfxkrZU2jFpyR7gEKN1uL0="'
+                                            . ', hash="1kFuupNATsh9T4rfyh1itrLl9hRTWlkXV97J7IJ4QKk="'
+                                            . ', ext="some-app-data", mac="Y9wtRQxYhRa8q4oh9h/W4mfxkrZU2jFpyR7gEKN1uL0="'
                     ],
                     function ($id) {
                         return $this->credentialsFunc($id);
@@ -146,8 +146,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8000,
                                 'authorization' => 'Hawk id="dh37fgj492je", ts="1353832234", nonce="j4h3g2"'
-                                                 . ', mac="m8r1rHbXN6NgO+KIIhjO7sFRyd78RNGVUwehe8Cp2dU="'
-                                                 . ', ext="some-app-data"'
+                                                    . ', mac="m8r1rHbXN6NgO+KIIhjO7sFRyd78RNGVUwehe8Cp2dU="'
+                                                    . ', ext="some-app-data"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -170,8 +170,8 @@ class ServerTest extends TestCase
                             'host' => 'example.com',
                             'port' => 8080,
                             'authorization' => 'Hawk id="123456", ts="1362337299", nonce="UzmxSs"'
-                                             . ', ext="some-app-data"'
-                                             . ', mac="wnNUxchvvryMH2RxckTdZ/gY3ijzvccx4keVvELC61w="'
+                                                . ', ext="some-app-data"'
+                                                . ', mac="wnNUxchvvryMH2RxckTdZ/gY3ijzvccx4keVvELC61w="'
                         ],
                         function ($id) {
                             return $this->credentialsFunc($id);
@@ -221,8 +221,8 @@ class ServerTest extends TestCase
                     'host' => 'example.com',
                     'port' => 8080,
                     'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                     . ', mac="bXx7a7p1h9QYQNZ8x7QhvDQym8ACgab4m3lVSFn4DBw="'
-                                     . ', ext="hello"'
+                                        . ', mac="bXx7a7p1h9QYQNZ8x7QhvDQym8ACgab4m3lVSFn4DBw="'
+                                        . ', ext="hello"'
                 ];
 
                 $memoryCache = [];
@@ -403,8 +403,8 @@ class ServerTest extends TestCase
                                 'url' => '/resource/4?filter=a',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -428,8 +428,8 @@ class ServerTest extends TestCase
                                 'url' => '/resource/4?filter=a',
                                 'host' => 'example.com',
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -454,8 +454,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -480,8 +480,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -506,8 +506,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -532,7 +532,7 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', ext="hello"'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -557,8 +557,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2", x="3"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -583,8 +583,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123\\", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -609,8 +609,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => "Hawk id=\"\t\", ts=\"1353788437\", nonce=\"k3j4h2\""
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -635,8 +635,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -661,8 +661,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", id="456", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
@@ -711,8 +711,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 throw new \Exception('Unknown user');
@@ -737,8 +737,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return null;
@@ -763,8 +763,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return [
@@ -792,8 +792,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return [
@@ -821,8 +821,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return [
@@ -851,8 +851,8 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="123", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
-                                                 . ', ext="hello"'
+                                                    . ', mac="/qwS4UjfVWMcUyW6EEgUH4jlr7T/wuKe3dKijvTvSos="'
+                                                    . ', ext="hello"'
                             ],
                             function ($id) {
                                 return [
@@ -1301,7 +1301,7 @@ class ServerTest extends TestCase
                                 'host' => 'example.com',
                                 'port' => 8080,
                                 'authorization' => 'Hawk id="1", ts="1353788437", nonce="k3j4h2"'
-                                                 . ', mac="zy79QQ5/EYFmQqutVnYb73gAc/U=", ext="hello"'
+                                                    . ', mac="zy79QQ5/EYFmQqutVnYb73gAc/U=", ext="hello"'
                             ],
                             function ($id) {
                                 return $this->credentialsFunc($id);
