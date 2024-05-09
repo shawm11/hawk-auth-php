@@ -79,7 +79,7 @@ Returns an array that contains the following if there were no errors:
    - _string_ `contentType` — (Optional) Payload content type. It is usually
      the value of the `Content-Type` header in the request. Only used for
      payload validation.
-1. _callable_ `$credentialsFunc` — (Required) Function for looking up the set
+2. _callable_ `$credentialsFunc` — (Required) Function for looking up the set
    of Hawk credentials based on the provided credentials ID. The function must
    have the following:
    - Parameter: _string_ `$id` — (Required) Unique ID for the client used to
@@ -89,7 +89,7 @@ Returns an array that contains the following if there were no errors:
      - _string_ `key` — (Required) Secret key for the client
      - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be
        an algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
-1. _array_ `$options` — (Optional) Includes the following:
+3. _array_ `$options` — (Optional) Includes the following:
    - _string_ `host` — (Optional) Host of the server (e.g. example.com).
      Overrides the `host` in the `$request` parameter.
    - _integer_ `port` — (Optional) Port number. Overrides the `port` in the
@@ -115,14 +115,14 @@ calculate the hash. Only used when payload cannot be provided during
 #### `authenticatePayload` Parameters
 
 1. _string_ `$payload` — (Required) Request body (or "payload")
-1. _array_ `$credentials` — (Required) Set of credentials that contains the
+2. _array_ `$credentials` — (Required) Set of credentials that contains the
    following:
    - _string_ `key` — (Required) Secret key for the client
    - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
      algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
-1. _array_ `$artifacts` — (Required) Contains the following:
+3. _array_ `$artifacts` — (Required) Contains the following:
    - _string_ `hash` — (Required) Payload hash
-1. _string_ `$contentType` — (Optional) Value of the `Content-Type` header in
+4. _string_ `$contentType` — (Optional) Value of the `Content-Type` header in
    the request
 
 ### `authenticatePayloadHash($calculatedHash, $artifacts)`
@@ -133,7 +133,7 @@ payload cannot be provided when using [`authenticate()`](#authenticaterequest-cr
 #### `authenticatePayloadHash` Parameters
 
 1. _string_ `$calculatedHash` — (Required) Pre-calculated payload hash
-1. _array_ `$artifacts` — (Required) Contains the following:
+2. _array_ `$artifacts` — (Required) Contains the following:
    - _string_ `hash` — (Required) Payload hash
 
 ### `header($credentials, $artifacts, $options)`
@@ -151,7 +151,7 @@ server's response.
    - _string_ `key` — (Required) Secret key for the client
    - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
      algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
-1. _array_ `$artifacts` — (Required) Components to be used to construct the
+2. _array_ `$artifacts` — (Required) Components to be used to construct the
    response `Server-Authorization` HTTP header. It includes the following:
    - _string_ `method` — Request method
    - _string_ `host` — Request host
@@ -162,7 +162,7 @@ server's response.
    - _string_ `app` — (Optional) Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
    - _string_ `dlg` — (Optional) 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
    - _string_ `id` — Client's unique Hawk ID
-1. _array_ `$options` — (Optional) Hawk attributes that will be integrated into
+3. _array_ `$options` — (Optional) Hawk attributes that will be integrated into
    the `Server-Authorization` header value. It includes the following:
    - _string_ `hash` — (Optional) Payload hash. Only used for payload
      validation
@@ -205,7 +205,7 @@ Returns and array that includes the following (if the bewit is valid):
    - _string_ `contentType` — (Optional) Payload content type. It is usually the
      value of the `Content-Type` header in the request. Only used for payload
      validation.
-1. _callable_ `$credentialsFunc` — (Required) Function for looking up the set
+2. _callable_ `$credentialsFunc` — (Required) Function for looking up the set
    of Hawk credentials based on the provided credentials ID. The function must
    have the following:
    - Parameter: _string_ `$id` — (Required) Unique ID for the client used to
@@ -215,7 +215,7 @@ Returns and array that includes the following (if the bewit is valid):
      - _string_ `key` — (Required) Secret key for the client
      - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be
        an algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
-1. _array_ `$options` — (Optional) Includes the following:
+3. _array_ `$options` — (Optional) Includes the following:
    - _string_ `host` — (Optional) Host of the server (e.g. example.com).
      Overrides the `host` in the `$request` parameter.
    - _integer_ `port` — (Optional) Port number. Overrides the `port` in the
@@ -240,11 +240,11 @@ Returns and array that includes the following (if the message is valid):
 
 1. _string_ `$host` — (Required) Host of the server the request was sent to
     (e.g. example.com)
-1. _integer_ `$port` — (Required) Port number the request was sent to
-1. _string_ `$message` — (Required) Message to validate
-1. _string_  `$authorization` — (Required) Components used to create
+2. _integer_ `$port` — (Required) Port number the request was sent to
+3. _string_ `$message` — (Required) Message to validate
+4. _string_  `$authorization` — (Required) Components used to create
    authorization string for the message. See [`message()` in the `Client` class](client-api.md#messagehost-port-message-options)
-1. _callable_ `$credentialsFunc` — (Required) Function for looking up the set of
+5. _callable_ `$credentialsFunc` — (Required) Function for looking up the set of
    Hawk credentials based on the provided credentials ID. The function must
    have the following:
    - Parameter: _string_ `$id` — (Required) Unique ID for the client used to
@@ -254,7 +254,7 @@ Returns and array that includes the following (if the message is valid):
      - _string_ `key` — (Required) Secret key for the client
      - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be
        an algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
-1. _array_ `$options` — (Optional) Includes the following:
+6. _array_ `$options` — (Optional) Includes the following:
    - _integer_ `timestampSkewSec` — (Optional, default: `60`) Amount of time
      (in seconds) the client and server timestamps can differ (usually because
      of network latency)

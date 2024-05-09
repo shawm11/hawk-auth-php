@@ -78,7 +78,7 @@ Returns an array that contains the header attributes and their values.
 #### `parseAuthorizationHeader` Parameters
 
 1. _string_ `$header` — (Required) Value of the `Authorization` HTTP header
-1. _array_ `$keys` — (Optional, default: `id`, `ts`, `nonce`, `hash`, `ext`,
+2. _array_ `$keys` — (Optional, default: `id`, `ts`, `nonce`, `hash`, `ext`,
    `mac`, `app`, `dlg`) Names of the attributes the Hawk `Authorization` HTTP
    header is supposed to contain
 

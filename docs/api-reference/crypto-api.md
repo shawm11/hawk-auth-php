@@ -41,12 +41,12 @@ Returns the HMAC digest as a string.
 
 1. _string_ `$type` — (Optional) Indicates the purpose of the MAC.'
    'Examples: `header`, `response`, `bewit`, `message`
-1. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
+2. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
    the following:
    - _string_ `key` — (Required) Secret key for the client
    - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
      algorithm in the [`$algorithms` array property](#algorithms-property).
-1. _array_ `$options` — (Required) Components used to construct used to create
+3. _array_ `$options` — (Required) Components used to construct used to create
    the HMAC digest. It contains the following:
    - _string_ `method` — (Optional) Request method
    - _string_ `host` — (Optional) Request host
@@ -69,7 +69,7 @@ Returns the normalized Hawk string.
 
 1. _string_ `$type` — (Optional) Indicates the purpose of the MAC.
    Examples: `header`, `response`, `bewit`, `message`
-1. _array_ `$options` — (Required) Components used to construct used to create
+2. _array_ `$options` — (Required) Components used to construct used to create
    the HMAC digest. It contains the following:
    - _string_ `method` — (Optional) Request method
    - _string_ `host` — (Optional) Request host
@@ -91,9 +91,9 @@ Returns the hash as a string.
 #### `calculatePayloadHash` Parameters
 
 1. _string_ `$payload` — (Required) Request body (or "payload")
-1. _string_ `$algorithm` — (Required) Algorithm to be used for HMAC. Must be an
+2. _string_ `$algorithm` — (Required) Algorithm to be used for HMAC. Must be an
    algorithm in the [`$algorithms` array property](#algorithms-property).
-1. _string_ `$contentType` — (Optional) Value of the `Content-Type` header in
+3. _string_ `$contentType` — (Optional) Value of the `Content-Type` header in
    the request
 
 ### `calculateTsMac($ts, $credentials)`
@@ -106,7 +106,7 @@ Returns the HMAC digest as a string.
 
 1. _string_ or _float_ `$ts` — (Required) Timestamp (as milliseconds since
    January 1, 1970) for which to calculate the MAC
-1. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
+2. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
    the following:
    - _string_ `key` — (Required) Secret key for the client
    - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
@@ -128,5 +128,5 @@ Return an array that contains the following:
    - _string_ `key` — (Required) Secret key for the client
    - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
      algorithm in the [`$algorithms` array property](#algorithms-property).
-1. _float_ `$localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
+2. _float_ `$localtimeOffsetMsec` — (Optional, default: `0`) Offset (in
    milliseconds) of the local time

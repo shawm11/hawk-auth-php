@@ -50,9 +50,9 @@ Returns an array that contains the following:
 
 1. _string_ or _array_ `$uri` — (Required) URI (as a string) of the request or
    an array that is the output of PHP's `parse_url()`
-1. _string_ `$method` — (Required) HTTP verb of the request (e.g. `GET`,
+2. _string_ `$method` — (Required) HTTP verb of the request (e.g. `GET`,
    `POST`)
-1. _array_ `$options` — (Required) Hawk attributes that will be integrated into
+3. _array_ `$options` — (Required) Hawk attributes that will be integrated into
    the `Authorization` header value. It includes the following:
    - _array_ `credentials` — (Required) Client's Hawk credentials, which include
      the following:
@@ -95,13 +95,13 @@ Validate the server's response.
      communicating with the correct server. Uses the same syntax as the
      `Authorization` header in the client's request.
    - `Content-Type` — (Optional) Only used for payload validation.
-1. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
+2. _array_ `$credentials` — (Required) Client's Hawk credentials, which include
    the following:
    - _string_ `id` — (Required) Client's unique Hawk ID
    - _string_ `key` — (Required) Secret key for the client
    - _string_ `algorithm` — (Required) Algorithm to be used for HMAC. Must be an
      algorithm in the [`$algorithms` array property of the `Crypto` class](crypto.md#algorithms-property).
-1. _array_ `$artifacts` — (Required) Components used to construct the request
+3. _array_ `$artifacts` — (Required) Components used to construct the request
    including the `Authorization` HTTP header. It includes the following:
    - _string_ `method` — Request method
    - _string_ `host` — Request host
@@ -113,7 +113,7 @@ Validate the server's response.
    - _string_ `ext` — Extra application-specific data
    - _string_ `app` — Application ID. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
    - _string_ `dlg` — 'delegated-by' attribute. Only used with [Oz](https://github.com/shawm11/oz-auth-php).
-1. _array_ `$options` — (Optional) Includes the following:
+4. _array_ `$options` — (Optional) Includes the following:
    - _string_ `payload` — (Optional) Request body (or "payload"). Only used for
      payload validation.
    - _boolean_ `required` — (Optional, default: `false`) If server's response
@@ -130,7 +130,7 @@ Returns the bewit as a string.
 
 1. _string_ or _array_ `$uri` — (Required) URI (as a string) for which to
    generate the bewit or an array that is the output of PHP's `parse_url()`
-1. _array_ `$options` — (Required) Items used to create the bewit. Includes the
+2. _array_ `$options` — (Required) Items used to create the bewit. Includes the
    following:
    - _array_ `credentials` — (Required) Client's Hawk credentials, which include
      the following:
@@ -162,11 +162,11 @@ Returns an array that contains the following:
 
 1. _string_ `$host` — (Required) Host portion of the URI the message will be
    sent to (e.g. example.com)
-1. _integer_ `$port` — (Required) Port number of the URI the message will be
+2. _integer_ `$port` — (Required) Port number of the URI the message will be
    sent to
-1. _string_ `$message` — (Required) Message for which to generate an
+3. _string_ `$message` — (Required) Message for which to generate an
    authorization
-1. _array_ `$options` — (Optional) Includes the following:
+4. _array_ `$options` — (Optional) Includes the following:
    - _array_ `credentials` — (Required) Client's Hawk credentials, which include
      the following:
      - _string_ `id` — (Required) Client's unique Hawk ID
