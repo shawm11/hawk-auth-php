@@ -209,9 +209,11 @@ Robo commands and their descriptions.
 
 The version is bumped automatically and the `CHANGELOG.md` file is generated
 from the commit messages using [development task CLI commands](#development-tasks-cli-commands).
-Installing the [Standard Version](https://github.com/conventional-changelog/standard-version),
-Node/NPM package is required to bump the version and generate the `CHANGELOG.md`
-file successfully.
+To bump the version and prepare for a release, run the following:
+
+```shell
+"./vendor/bin/robo release
+```
 
 ## Git Hooks
 
