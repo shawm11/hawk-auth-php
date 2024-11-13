@@ -1,7 +1,7 @@
 <?php
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
-use vierbergenlars\SemVer\version;
+use Robo\Symfony\ConsoleIO;
 
 /**
  * This is project's console commands configuration for Robo task runner.
@@ -13,19 +13,19 @@ class RoboFile extends \Robo\Tasks
     /**
      * The command executed when the Git pre-commit hook is triggered
      */
-    public function gitHookPreCommit()
+    public function gitHookPreCommit(ConsoleIO $io)
     {
         $execution = $this->taskExecStack()
                           ->stopOnFail()
                           ->exec('"./vendor/bin/robo" git:stash "pre-commit-'
-                            . (new \DateTime)->format(\DateTime::ISO8601) . '"')
+                            . (new \DateTime)->format(\DateTime::ATOM) . '"')
                           ->exec('"./vendor/bin/robo" lint')
                           ->exec('"./vendor/bin/robo" test')
                           ->exec('"./vendor/bin/robo" git:stash-pop')
                           ->run();
 
         if (!$execution->wasSuccessful()) {
-            $this->io()->error('ABORTING COMMIT!');
+            $io()->error('ABORTING COMMIT!');
             $this->_exec('"./vendor/bin/robo" git:stash-pop');
         }
 
@@ -45,7 +45,7 @@ class RoboFile extends \Robo\Tasks
      *
      * @param  $name  A name for the stash
      */
-    public function gitStash($name)
+    public function gitStash(ConsoleIO $io, $name)
     {
         return $this->_exec("git stash save --keep-index --include-untracked $name");
     }
@@ -76,24 +76,24 @@ class RoboFile extends \Robo\Tasks
     /**
      * Bump the version and prepare for release
      */
-    public function release()
+    public function release(ConsoleIO $io)
     {
         $execution = $this->taskExecStack()
                           ->stopOnFail()
                           ->exec(
                               '"./vendor/bin/robo" git:stash "release-'
-                              . (new \DateTime)->format(\DateTime::ISO8601) . '"'
+                              . (new \DateTime)->format(\DateTime::ATOM) . '"'
                           )
                           ->exec('"./vendor/bin/robo" lint')
                           ->exec('"./vendor/bin/robo" test')
-                          ->exec('"./vendor/bin/robo" git:stash-pop')
-                          ->exec('standard-version')
+                          ->exec('"./vendor/bin/conventional-changelog" --commit')
                           ->run();
 
         if (!$execution->wasSuccessful()) {
-            $this->io()->error('RELEASE FAILED!');
-            $this->_exec('"./vendor/bin/robo" git:stash-pop');
+            $io()->error('RELEASE FAILED!');
         }
+
+        $this->_exec('"./vendor/bin/robo" git:stash-pop');
 
         return $execution;
     }
