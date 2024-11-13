@@ -4,6 +4,7 @@
 <!-- omit in toc -->
 ## Table of Contents
 
+- [Installation](#installation)
 - [Testing](#testing)
 - [Coding Style](#coding-style)
   - [PHPDoc](#phpdoc)
@@ -21,6 +22,16 @@
 - [Version Bump and Changelog](#version-bump-and-changelog)
 - [Git Hooks](#git-hooks)
   - [Installing Hooks](#installing-hooks)
+
+## Installation
+
+To install the dependencies for development, use the following command.
+
+```shell
+composer install
+```
+
+Afterwards, [install the Git hooks](#installing-hooks).
 
 ## Testing
 
