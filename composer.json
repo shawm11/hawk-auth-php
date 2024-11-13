@@ -13,7 +13,8 @@
         "codeception/specify": "^2.0",
         "codeception/verify": "^3.2",
         "consolidation/robo": "^4.0",
-        "phpstan/phpstan": "^1.8",
+        "marcocesarato/php-conventional-changelog": "^1.17",
+        "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^9.0",
         "squizlabs/php_codesniffer": "^3.2"
     },
