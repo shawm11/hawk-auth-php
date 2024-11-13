@@ -85,7 +85,7 @@ class Client implements ClientInterface
                         . (empty($uri['query']) ? '' : ('?' . $uri['query'])),
             'host' => empty($uri['host']) ? null : $uri['host'],
             'port' => empty($uri['port'])
-                ? (isset($uri['scheme']) && $uri['scheme'] === 'https') ? 443 : 80
+                ? ((isset($uri['scheme']) && $uri['scheme'] === 'https') ? 443 : 80)
                 : $uri['port'],
             'hash' => empty($options['hash']) ? null : $options['hash'],
             'ext' => empty($options['ext']) ? null : $options['ext'],
@@ -113,7 +113,7 @@ class Client implements ClientInterface
          * Construct header
          */
         // Other falsey values allowed
-        $hashExt = $artifacts['ext'] && !is_null($artifacts['ext']) && $artifacts['ext'] !== '';
+        $hashExt = $artifacts['ext'] && !is_null($artifacts['ext']);
         $header = "Hawk id=\"{$credentials['id']}\", ts=\"{$artifacts['ts']}\", nonce=\"{$artifacts['nonce']}\""
                 . ($artifacts['hash'] ? ", hash=\"{$artifacts['hash']}\"" : '')
                 . ($hashExt ? ", ext=\"{$this->Utils->escapeHeaderAttribute($artifacts['ext'])}\"" : '')
@@ -295,7 +295,7 @@ class Client implements ClientInterface
             'resource' => $uri['path'] . (empty($uri['query']) ? '' : ('?' . $uri['query'])),
             'host' => $uri['host'],
             'port' => empty($uri['port'])
-                ? (isset($uri['scheme']) && $uri['scheme'] === 'https') ? 443 : 80
+                ? ((isset($uri['scheme']) && $uri['scheme'] === 'https') ? 443 : 80)
                 : $uri['port'],
             'ext' => $ext
         ]);
