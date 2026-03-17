@@ -8,7 +8,7 @@
         "php": ">=5.5.0"
     },
     "require-dev": {
-        "php": ">=7.3.0",
+        "php": "7.3 - 8.5",
         "codeception/assert-throws": "^1.0",
         "codeception/specify": "^2.0",
         "codeception/verify": "^3.2",
