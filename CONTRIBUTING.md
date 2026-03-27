@@ -48,7 +48,7 @@ To run all tests, use the following command.
 
 This project follows the [PSR-2 Coding Style
 Guide](https://www.php-fig.org/psr/psr-2/) for PHP code.
-[PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) is used to
+[PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer) is used to
 make sure the PHP code adheres to PSR-2. Use the `php artisan lint` command to
 find and report coding style errors and warnings in PHP files.
 
